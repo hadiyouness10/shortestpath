@@ -31,15 +31,15 @@
         border-radius: 100%;
     }
     50% {
-        background-color: rgba(17, 104, 217, 0.75);
+        background-color: #4b1b00;
     }
     75% {
         transform: scale(1.2);
-        background-color: rgba(0, 217, 159, 0.75);
+        background-color: #f87e46;
     }
     100% {
         transform: scale(1);
-        background-color: rgba(0, 190, 218, 0.75);
+        background-color: #db9b11;
     }
 }
 
@@ -61,14 +61,14 @@
 @keyframes shortestPath {
     0% {
         transform: scale(0.6);
-        background-color: rgb(255, 254, 106);
+        background-color: rgb(241, 238, 9)10;
     }
     50% {
         transform: scale(1.2);
-        background-color: rgb(255, 254, 106);
+        background-color: rgb(124, 94, 2);
     }
     100% {
         transform: scale(1);
-        background-color: rgb(255, 254, 106);
+        background-color: rgb(48, 34, 22);
     }
 }
