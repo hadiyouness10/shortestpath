@@ -25,17 +25,31 @@ export default class PathfindingVisualizer extends Component {
     }
 
 
-    // handleMouseDown(row, col) {
-    //     const newGrid = getGirdWithWallToggled = 
-    // }
-    animateDijkstra(nodesInShortedPathOrder) {
+    animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder) {
+        for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+            if (i === visitedNodesInOrder.length) {
+                setTimeout(() => {
+                    this.animateShortestPath(nodesInShortedPathOrder);
+                }, 10 * i);
+                return;
+            }
+            setTimeout(() => {
+                const node = visitedNodesInOrder[i];
+                document.getElementById(`node-${node.row}-${node.col}`).className = `node node-visited`;
+            }, 10 * i);
+        }
+    }
+
+    animateShortestPath(nodesInShortedPathOrder) {
         for (let i = 0; i < nodesInShortedPathOrder.length; i++){
             setTimeout(() => {
                 const node = nodesInShortedPathOrder[i];
                 document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
-            }, 50 * i);
+            }, 50*i);
         }
     }
+
+    
 
     visualizeDijkstra() {
         const { grid } = this.state;
@@ -43,7 +57,9 @@ export default class PathfindingVisualizer extends Component {
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
         const nodesInShortedPathOrder = getNodesInShortestPathOrder(finishNode);
+        console.log(nodesInShortedPathOrder)
         this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
+        console.log(grid)
     }
 
     render() {
@@ -96,8 +112,8 @@ const createNode = (col, row) => {
     return {
         col,
         row,
-        isStart: row === 10 && col === 5,
-        isFinish: row === 10 && col === 45,
+        isStart: row === START_NODE_ROW && col === START_NODE_COL,
+        isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
         distance: Infinity,
         isVisited: false,
         isWall: false,
