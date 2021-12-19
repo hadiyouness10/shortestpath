@@ -5,9 +5,9 @@ import Node from './Node/Node';
 import './PathFindingVisualizer.css';
 
 const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
+const START_NODE_COL = 5;
 const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+const FINISH_NODE_COL = 20;
 
 export default class PathfindingVisualizer extends Component {
     constructor() {
@@ -16,8 +16,6 @@ export default class PathfindingVisualizer extends Component {
         this.state = {
             grid: [],
             mouseIsPressed: false,
-            innerWidth: window.innerWidth,
-            innerHeight: window.innerHeight
         };
 
         window.addEventListener('resize', this.getIntialGrid);
@@ -37,6 +35,20 @@ export default class PathfindingVisualizer extends Component {
 
     }
 
+    handleMouseDown(row, col) {
+        const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
+        this.setState({ grid: newGrid, mouseIsPressed: true });
+    }
+
+    handleMouseEnter(row, col) {
+        if (!this.state.mouseIsPressed) return;
+        const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
+        this.setState({ grid: newGrid });
+    }
+
+    handleMouseUp() {
+        this.setState({ mouseIsPressed: false });
+    }
 
 
     animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder) {
@@ -126,8 +138,12 @@ createNode = (col, row) => {
                                         row={row}
                                         isStart={isStart}
                                         isFinish={isFinish}
-                                        isWall = {isWall}
-                                        test={'foo'}></Node>
+                                        isWall={isWall}
+                                        onMouseDown={(row, col) => this.handleMouseDown(row, col)}
+                                        onMouseEnter={(row, col) =>
+                                            this.handleMouseEnter(row, col)
+                                        }
+                                        onMouseUp={() => this.handleMouseUp()}></Node>
                                 );
                             })}
                         </div>
@@ -139,3 +155,14 @@ createNode = (col, row) => {
     };
 }
 
+
+const getNewGridWithWallToggled = (grid, row, col) => {
+    const newGrid = grid.slice();
+    const node = newGrid[row][col];
+    const newNode = {
+        ...node,
+        isWall: !node.isWall,
+    };
+    newGrid[row][col] = newNode;
+    return newGrid;
+}
