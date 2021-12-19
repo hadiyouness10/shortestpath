@@ -1,12 +1,13 @@
 import React, { Component, useLayoutEffect } from 'react';
+import { breadthFirstSearch, getNodesInShortestPathOrderBreadth } from '../../algorithms/breadthFirstSearch';
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
 import Node from './Node/Node';
 
 import './PathFindingVisualizer.css';
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 5;
-const FINISH_NODE_ROW = 10;
+const START_NODE_ROW = 5;
+const START_NODE_COL = 10;
+const FINISH_NODE_ROW = 20;
 const FINISH_NODE_COL = 20;
 
 export default class PathfindingVisualizer extends Component {
@@ -83,11 +84,20 @@ export default class PathfindingVisualizer extends Component {
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
         const nodesInShortedPathOrder = getNodesInShortestPathOrder(finishNode);
-        console.log(nodesInShortedPathOrder)
+        // console.log(nodesInShortedPathOrder)
         this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
         console.log(grid)
     }
-    
+    visualizeBreathFirstSearch() {
+        const { grid } = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+        console.log(visitedNodesInOrder.length)
+        const nodesInShortedPathOrder = getNodesInShortestPathOrderBreadth(finishNode);
+        this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
+        // console.log(nodesInShortedPathOrder)
+    }
     getIntialGrid = () => {
         const grid = [];
         for (let row = 0; row < window.innerHeight/25 - 8; row++) {
@@ -122,8 +132,10 @@ createNode = (col, row) => {
         return (
 
             <>
-                <button onClick={() => this.visualizeDijkstra()}>
-            Visualize Dijskrtra's Algorithm</button>
+            <button onClick={() => this.visualizeDijkstra()}>
+                    Visualize Dijskrtra's Algorithm</button>
+            <button onClick={() => this.visualizeBreathFirstSearch()}>
+            Visualize Breadth First Search</button>
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
