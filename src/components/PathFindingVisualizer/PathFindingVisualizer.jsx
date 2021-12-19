@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useLayoutEffect } from 'react';
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
 import Node from './Node/Node';
 
@@ -16,13 +16,27 @@ export default class PathfindingVisualizer extends Component {
         this.state = {
             grid: [],
             mouseIsPressed: false,
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight
         };
+
+        window.addEventListener('resize', this.getIntialGrid);
+    }
+    updateGrid() {
+        console.log('updating');
+
+        const grid = this.getIntialGrid();
+        console.log(grid);
+        this.setState({ grid });
     }
     
     componentDidMount() {
-        const grid = getIntialGrid();
+        const grid = this.getIntialGrid();
         this.setState({ grid });
+        // window.addEventListener("resize", console.log('updating'))
+
     }
+
 
 
     animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder) {
@@ -61,6 +75,35 @@ export default class PathfindingVisualizer extends Component {
         this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
         console.log(grid)
     }
+    
+    getIntialGrid = () => {
+        const grid = [];
+        for (let row = 0; row < window.innerHeight/25 - 8; row++) {
+        const currentRow = [];
+        for (let col = 0; col < window.innerWidth/25 - 4; col++) {
+                
+            currentRow.push(this.createNode(col, row));
+        }
+        grid.push(currentRow);
+        }
+        this.setState({grid})
+    return grid;
+};
+    
+createNode = (col, row) => {
+    return {
+        col,
+        row,
+        isStart: row === START_NODE_ROW && col === START_NODE_COL,
+        isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+        distance: Infinity,
+        isVisited: false,
+        isWall: false,
+        previousNode: null
+
+    };
+    
+};
 
     render() {
         const { grid } = this.state;
@@ -77,6 +120,7 @@ export default class PathfindingVisualizer extends Component {
                                 const {row, col, isFinish, isStart, isWall } = node;
                                 return (
                                     <Node
+                                        width = {window.innerWidth}
                                         key={idx1}
                                         col={col}
                                         row={row}
@@ -95,30 +139,3 @@ export default class PathfindingVisualizer extends Component {
     };
 }
 
-const getIntialGrid = () => {
-    const grid = [];
-    for (let row = 0; row < 15; row++) {
-        const currentRow = [];
-        for (let col = 0; col < 50; col++) {
-                
-            currentRow.push(createNode(col, row));
-        }
-        grid.push(currentRow);
-    }
-    return grid;
-};
-    
-const createNode = (col, row) => {
-    return {
-        col,
-        row,
-        isStart: row === START_NODE_ROW && col === START_NODE_COL,
-        isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-        distance: Infinity,
-        isVisited: false,
-        isWall: false,
-        previousNode: null
-
-    };
-    
-};
