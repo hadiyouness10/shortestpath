@@ -107,11 +107,14 @@ createNode = (col, row) => {
 
     render() {
         const { grid } = this.state;
+         
         return (
 
             <>
-                <button onClick={() => this.visualizeDijkstra()}>
-            Visualize Dijskrtra's Algorithm</button>
+        
+
+                {/* <button onClick={() => this.visualizeDijkstra()}>
+            Visualize Dijskrtra's Algorithm</button> */}
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
