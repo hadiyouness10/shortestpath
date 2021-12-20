@@ -1,6 +1,6 @@
 export function bidirectionalSearch(grid, startNode, endNode){
 
-    if(!startNode || !endNode || startNode == endNode){
+    if(!startNode || !endNode || startNode === endNode){
         return false;
     }
 
@@ -9,6 +9,9 @@ export function bidirectionalSearch(grid, startNode, endNode){
 
     let visitedNodesInOrderStart = [];
     let visitedNodesInOrderFinish = [];
+
+    startNode.distance =0;
+    endNode.distance=0;
 
     unvisitedNodesStart.push(startNode);
     unvisitedNodesFinish.push(endNode);
@@ -92,11 +95,11 @@ function isNeighbour(closestNodeStart, closesetNodeEnd) {
     return false;
   }
 
-  function getNeighbours(closestNode, grid){
+  function getNeighbours(node, grid){
 
     let neighbours = [];
-    let row = closestNode.row;
-    let col = closestNode.col;
+    let row = node.row;
+    let col = node.col;
     if(row > 0){
         neighbours.push(grid[row-1][col])
     }
@@ -110,7 +113,7 @@ function isNeighbour(closestNodeStart, closesetNodeEnd) {
         neighbours.push(grid[row][col+1])
     }
 
-    return( neighbours.filter(neighbour => !neighbour.isVisited))
+    return( neighbours.filter(neighbour => !neighbour.isVisited));
 
 
   }
@@ -118,10 +121,10 @@ function isNeighbour(closestNodeStart, closesetNodeEnd) {
   function neighbourNotinUnvisitedNodes(neighbour, unvisitedNodes){
       for(let node of unvisitedNodes){
           if(neighbour.row == node.row && neighbour.col == node.col){
-              return true;
+              return false;
           }
       }
-      return false;
+      return true;
 
 
   }

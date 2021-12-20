@@ -71,46 +71,33 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
-    animateBidirectionalAlgorithm(
-        visitedNodesInOrderStart,
-        visitedNodesInOrderFinish,
-        nodesInShortestPathOrder,
-        isShortedPath
-      ) {
-        let len = Math.max(
-          visitedNodesInOrderStart.length,
-          visitedNodesInOrderFinish.length
-        );
-        for (let i = 1; i <= len; i++) {
-          let nodeA = visitedNodesInOrderStart[i];
-          let nodeB = visitedNodesInOrderFinish[i];
+    animateBidirectionalAlgorithm(visitedNodesInOrderStart,visitedNodesInOrderFinish,nodesInShortestPathOrder, isShortedPath) {
+
+        for (let i = 1; i <= Math.max(visitedNodesInOrderStart.length,visitedNodesInOrderFinish.length); i++) {
+          
+        //   let visitedNodesInOrder = getVisitedNodesInOrder(visitedNodesInOrderStart,visitedNodesInOrderFinish);
+
 
           if (i === visitedNodesInOrderStart.length) {
             setTimeout(() => {
-              let visitedNodesInOrder = getVisitedNodesInOrder(
-                visitedNodesInOrderStart,
-                visitedNodesInOrderFinish
-              );
               if (isShortedPath) {
-                this.animateShortestPath(
-                  nodesInShortestPathOrder,
-                  visitedNodesInOrder
-                );
+                this.animateShortestPath(nodesInShortestPathOrder);
               } else {
-                this.setState({ visualizingAlgorithm: false });
+                  //add code if algorithm is false
               }
-            }, i * this.state.speed);
+            }, i * 10);
             return;
           }
           setTimeout(() => {
             //visited nodes
+            let nodeA = visitedNodesInOrderStart[i];
+            let nodeB = visitedNodesInOrderFinish[i]
+            ;
             if (nodeA !== undefined)
-              document.getElementById(`node-${nodeA.row}-${nodeA.col}`).className =
-                "node node-visited";
+              document.getElementById(`node-${nodeA.row}-${nodeA.col}`).className ="node node-visited";
             if (nodeB !== undefined)
-              document.getElementById(`node-${nodeB.row}-${nodeB.col}`).className =
-                "node node-visited";
-          }, i * this.state.speed);
+              document.getElementById(`node-${nodeB.row}-${nodeB.col}`).className ="node node-visited";
+          }, i * 10);
         }
       }
     
@@ -268,25 +255,25 @@ createNode = (col, row) => {
     };
 }
 
-const getVisitedNodesInOrder = (
-    visitedNodesInOrderStart,
-    visitedNodesInOrderFinish
-  ) => {
-    let visitedNodesInOrder = [];
-    let n = Math.max(
-      visitedNodesInOrderStart.length,
-      visitedNodesInOrderFinish.length
-    );
-    for (let i = 0; i < n; i++) {
-      if (visitedNodesInOrderStart[i] !== undefined) {
-        visitedNodesInOrder.push(visitedNodesInOrderStart[i]);
-      }
-      if (visitedNodesInOrderFinish[i] !== undefined) {
-        visitedNodesInOrder.push(visitedNodesInOrderFinish[i]);
-      }
-    }
-    return visitedNodesInOrder;
-  };
+// const getVisitedNodesInOrder = (
+//     visitedNodesInOrderStart,
+//     visitedNodesInOrderFinish
+//   ) => {
+//     let visitedNodesInOrder = [];
+//     let n = Math.max(
+//       visitedNodesInOrderStart.length,
+//       visitedNodesInOrderFinish.length
+//     );
+//     for (let i = 0; i < n; i++) {
+//       if (visitedNodesInOrderStart[i] !== undefined) {
+//         visitedNodesInOrder.push(visitedNodesInOrderStart[i]);
+//       }
+//       if (visitedNodesInOrderFinish[i] !== undefined) {
+//         visitedNodesInOrder.push(visitedNodesInOrderFinish[i]);
+//       }
+//     }
+//     return visitedNodesInOrder;
+//   };
 
 const getNewGridWithWallToggled = (grid, row, col) => {
     const newGrid = grid.slice();
