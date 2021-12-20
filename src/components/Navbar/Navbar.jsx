@@ -79,7 +79,7 @@ export default class Navbar extends Component {
 
                     </ul>
                 </li>
-                <li id='startButtonStart'><button id="actualStartButton" className="btn btn-default navbar-btn" type="button">{this.state.algorithm}</button></li>
+                <li id='startButtonStart'><button id="actualStartButton" className="btn btn-default navbar-btn" type="button" onClick={()=>this.visualizeAlgorithm()}>{this.state.algorithm}</button></li>
                 <li id='startButtonClearBoard'><a href="#">Clear Board</a></li>
                 <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
                 <li id='startButtonClearPath'><a href="#">Clear Path</a></li>

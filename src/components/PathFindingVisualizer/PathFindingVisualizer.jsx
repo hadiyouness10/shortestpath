@@ -135,7 +135,7 @@ export default class PathfindingVisualizer extends Component {
         this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
         console.log(grid)
     }
-    visualizeBreathFirstSearch() {
+    visualizeBreadthFirstSearch() {
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -226,7 +226,7 @@ createNode = (col, row) => {
         const { grid } = this.state;
        
         return (
-            <>
+            <React.Fragment>
             <Navbar
 
             visualizingAlgorithm={this.state.visualizingAlgorithm}
@@ -276,7 +276,7 @@ createNode = (col, row) => {
                     );
                 })}
                 </div>
-            </>
+            </React.Fragment>
         );
     };
 }
