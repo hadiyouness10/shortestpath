@@ -100,6 +100,17 @@ export default class Navbar extends Component {
       });
     }
 
+    clearweightsANDwalls(){
+      if(this.props.visualizeAlgorithm){
+        return;
+      }
+      this.props.clearweightsANDwalls();
+      this.setState({
+        pathState: false,
+        mazeState: false,
+      });
+    }
+
 
     render() {
 
@@ -134,7 +145,7 @@ export default class Navbar extends Component {
 
                 <li id='startButtonStart'><button id="actualStartButton" className="btn btn-default navbar-btn" type="button" onClick={()=>this.visualizeAlgorithm()}>{this.state.algorithm}</button></li>
                 <li id='startButtonClearBoard' onClick={() => this.clearGrid()}><a href="#">Clear Board</a></li>
-                <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
+                <li id='startButtonClearWalls' onClick={() => this.clearweightsANDwalls()}><a href="#">Clear Walls &amp; Weights</a></li>
                 <li id='startButtonClearPath' onClick={()=>this.clearPath()}><a href="#">Clear Path</a></li>
                 <li className="dropdown">
                   <a href="#" id="adjustSpeed" className="dropdown-toggle" data-toggle="dropdown">Speed : {this.state.speedState} <span className="caret"></span></a>

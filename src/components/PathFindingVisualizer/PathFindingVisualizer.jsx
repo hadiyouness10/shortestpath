@@ -120,14 +120,6 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
-    startPathFinder(algorithm){
-
-        if(algorithm == "dijkstra"){
-            this.visualizeDijkstra()
-        }
-
-    }
-
     visualizeDijkstra() {
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -259,7 +251,18 @@ clearPath(){
         grid:newGrid,
         visualizingAlgorithm:false,
     })
+}
 
+clearweightsANDwalls(){
+    if(this.state.visualizingAlgorithm){
+        return;
+    }
+
+    const newGrid = getNewGridWithoutWallsAndWeights(this.state.grid);
+    this.setState({
+        grid:newGrid,
+        visualizingAlgorithm:false,
+    })
 
 }
     
@@ -296,22 +299,24 @@ updateSpeed(path,maze){
             <Navbar
 
             visualizingAlgorithm={this.state.visualizingAlgorithm}
-            // generatingMaze={this.state.generatingMaze}
+            visualizeAStar={this.visualizeAStar.bind(this)}
             visualizeDijkstra={this.visualizeDijkstra.bind(this)}
-            // visualizeAStar={this.visualizeAStar.bind(this)}
             visualizeBestFirstSearch={this.visualizeBestFirstSearch.bind(this)}
             visualizeBidirectionalSearch={this.visualizeBidirectionalSearch.bind(this)}
             visualizeBreadthFirstSearch={this.visualizeBreadthFirstSearch.bind(this)}
             visualizeDepthFirstSearch={this.visualizeDepthFirstSearch.bind(this)}
-            // generateRandomMaze={this.generateRandomMaze.bind(this)}
-            // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(
-            // this
-            // )}
-            // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
-            // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
+         
             clearGrid={this.clearGrid.bind(this)}
             clearPath={this.clearPath.bind(this)}
+            clearweightsANDwalls = {this.clearweightsANDwalls.bind(this)}
             updateSpeed={this.updateSpeed.bind(this)}
+
+
+            // generatingMaze={this.state.generatingMaze}
+            // generateRandomMaze={this.generateRandomMaze.bind(this)}
+            // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(this)}
+            // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
+            // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
             
             />
 
@@ -372,6 +377,30 @@ const getNewGridWithWeights = (grid, row, col)=> {
         hasWeight: !node.hasWeight,
     };
     newGrid[row][col] = newNode;
+    return newGrid;
+}
+
+const getNewGridWithoutWallsAndWeights= (grid) =>{
+    const newGrid = grid.slice()
+    for(let row of grid){
+        for(let node of row){
+        if(node.hasWeight){
+            const newNode = {
+                ...node,
+                hasWeight:false,
+            };
+            newGrid[node.row][node.col] = newNode;
+
+        }
+        if(node.isWall && (node.col !== grid.length[0] && node.row !== grid.length)){
+            const newNode = {
+                ...node,
+                isWall:false,
+            };
+            newGrid[node.row][node.col] = newNode;
+        }
+    }
+    }
     return newGrid;
 }
 
