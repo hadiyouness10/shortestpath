@@ -6,6 +6,7 @@ import { bestFirstSearch, getNodesInShortestPathOrderBest } from '../../algorith
 import { bidirectionalSearch, getNodesInShortestPathOrderBidirectionalSearch } from '../../algorithms/bidirectionalSearch';
 
 import Node from './Node/Node';
+import Navbar from '../Navbar/Navbar';
 
 import './PathFindingVisualizer.css';
 
@@ -21,10 +22,16 @@ export default class PathfindingVisualizer extends Component {
         this.state = {
             grid: [],
             mouseIsPressed: false,
+            visualizingAlgorithm: false,
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight,
+            currentAlgorithm: null,
         };
 
         window.addEventListener('resize', this.getIntialGrid);
     }
+
+
     updateGrid() {
         console.log('updating');
 
@@ -36,7 +43,6 @@ export default class PathfindingVisualizer extends Component {
     componentDidMount() {
         const grid = this.getIntialGrid();
         this.setState({ grid });
-        // window.addEventListener("resize", console.log('updating'))
 
     }
 
@@ -111,7 +117,13 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
-    
+    startPathFinder(algorithm){
+
+        if(algorithm == "dijkstra"){
+            this.visualizeDijkstra()
+        }
+
+    }
 
     visualizeDijkstra() {
         const { grid } = this.state;
@@ -209,21 +221,35 @@ createNode = (col, row) => {
     
 };
 
+
     render() {
         const { grid } = this.state;
+       
         return (
-
             <>
-            <button onClick={() => this.visualizeDijkstra()}>
-                    Visualize Dijskrtra's Algorithm</button>
-            <button onClick={() => this.visualizeBreathFirstSearch()}>
-            Visualize Breadth First Search</button>
-            <button onClick={() => this.visualizeDepthFirstSearch()}>
-            Visualize Depth First Search</button>
-            <button onClick={() => this.visualizeBestFirstSearch()}>
-            Visualize Best First Search</button>
-            <button onClick={() => this.visualizeBidirectionalSearch()}>
-            Visualize Bidirectional Search</button>
+            <Navbar
+
+            visualizingAlgorithm={this.state.visualizingAlgorithm}
+            // generatingMaze={this.state.generatingMaze}
+            visualizeDijkstra={this.visualizeDijkstra.bind(this)}
+            // visualizeAStar={this.visualizeAStar.bind(this)}
+            visualizeBestFirstSearch={this.visualizeBestFirstSearch.bind(this)}
+            visualizeBidirectionalSearch={this.visualizeBidirectionalSearch.bind(this)}
+            visualizeBreadthFirstSearch={this.visualizeBreadthFirstSearch.bind(this)}
+            visualizeDepthFirstSearch={this.visualizeDepthFirstSearch.bind(this)}
+            // generateRandomMaze={this.generateRandomMaze.bind(this)}
+            // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(
+            // this
+            // )}
+            // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
+            // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
+            // clearGrid={this.clearGrid.bind(this)}
+            // clearPath={this.clearPath.bind(this)}
+            // updateSpeed={this.updateSpeed.bind(this)}
+            
+            />
+
+
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
