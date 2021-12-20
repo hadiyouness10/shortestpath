@@ -115,7 +115,7 @@ export default class PathfindingVisualizer extends Component {
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-        const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
+        const visitedNodesInOrder = bestFirstSearch(grid, startNode, finishNode);
         console.log(visitedNodesInOrder.length)
         const nodesInShortedPathOrder = getNodesInShortestPathOrderBest(finishNode);
         this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);

@@ -26,11 +26,11 @@ export function bestFirstSearch(grid, startNode, endNode){
             if (neighbourNotInUnvisitedNodes(neighbour, unvisitedNodes)) {
               unvisitedNodes.unshift(neighbour);
               neighbour.distance = distance;
-              neighbour.totalDistance = manhattenDistance(neighbour, finishNode);
+              neighbour.totalDistance = manhattenDistance(neighbour, endNode);
               neighbour.previousNode = closestNode;
             } else if (distance < neighbour.distance) {
               neighbour.distance = distance;
-              neighbour.totalDistance = manhattenDistance(neighbour, finishNode);
+              neighbour.totalDistance = manhattenDistance(neighbour, endNode);
               neighbour.previousNode = closestNode;
             }
            
