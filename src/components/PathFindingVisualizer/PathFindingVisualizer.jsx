@@ -219,6 +219,25 @@ export default class PathfindingVisualizer extends Component {
         console.log(grid);
     return grid;
 };
+
+clearGrid(){
+    if(this.state.visualizingAlgorithm){
+        return;
+    }
+    for(let row = 0; row<this.state.grid.length; row++){
+        for(let col=0;col<this.state.grid[0].length;col++){
+            if(!((row==START_NODE_ROW && col==START_NODE_COL) || (row===FINISH_NODE_ROW && col ===FINISH_NODE_COL))){
+                document.getElementById(`node-${row}-${col}`).className = "node";
+
+            }
+        }
+    }
+    const newGrid = this.getIntialGrid();
+    this.setState({
+        grid:newGrid,
+        visualizingAlgorithm:false,
+    })
+}
     
 createNode = (col, row) => {
     return {
@@ -262,7 +281,7 @@ createNode = (col, row) => {
             // )}
             // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
             // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
-            // clearGrid={this.clearGrid.bind(this)}
+            clearGrid={this.clearGrid.bind(this)}
             // clearPath={this.clearPath.bind(this)}
             // updateSpeed={this.updateSpeed.bind(this)}
             

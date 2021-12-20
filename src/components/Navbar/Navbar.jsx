@@ -7,6 +7,7 @@ export default class Navbar extends Component {
         super(props);
         this.state = {
             algorithm:"Visualize!",
+            feature:'None',
             maze:"Generate Maze",
             pathState:false,
             mazeState:false,
@@ -27,6 +28,14 @@ export default class Navbar extends Component {
             this.setState({algorithm:selection});
         }
     }
+
+    selectFeature(selection){
+      //if algorithm is already running
+      if(this.props.visualizingAlgorithm){
+          return;
+      }
+          this.setState({feature:selection});
+  }
 
     visualizeAlgorithm(){
         //if algorithm is already running
@@ -56,6 +65,18 @@ export default class Navbar extends Component {
           }
     }
 
+    clearGrid(){
+      if(this.props.visualizeAlgorithm){
+        return;
+      }
+      this.props.clearGrid();
+      this.setState({
+        algorithm:"Visualize!",
+        pathState:false,
+        mazeState:false
+      })
+    }
+
 
     render() {
 
@@ -79,8 +100,17 @@ export default class Navbar extends Component {
 
                     </ul>
                 </li>
+                <li className="dropdown">
+                  <a href="#" id="addFeature" className="dropdown-toggle" data-toggle="dropdown">Feature: {this.state.feature} <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li id="adjustWall" onClick={() =>this.selectFeature("None")}> <a href="#"> None</a></li>
+                    <li id="adjustWall" onClick={() => this.selectFeature("Wall")}> <a href="#"> Wall</a></li>
+                    <li id="adjustWeight"onClick={() => this.selectFeature("Weight")}> <a href="#"> Weight</a></li>
+                  </ul>
+                </li>
+
                 <li id='startButtonStart'><button id="actualStartButton" className="btn btn-default navbar-btn" type="button" onClick={()=>this.visualizeAlgorithm()}>{this.state.algorithm}</button></li>
-                <li id='startButtonClearBoard'><a href="#">Clear Board</a></li>
+                <li id='startButtonClearBoard' onClick={() => this.clearGrid()}><a href="#">Clear Board</a></li>
                 <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
                 <li id='startButtonClearPath'><a href="#">Clear Path</a></li>
                 <li className="dropdown">
