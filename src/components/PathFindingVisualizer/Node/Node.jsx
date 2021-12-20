@@ -15,6 +15,7 @@ export default class Node extends Component {
             isFinish,
             isStart,
             row,
+            direction,
             isWall,
             onMouseDown,
             onMouseEnter,
