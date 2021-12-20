@@ -1,6 +1,7 @@
 import React, { Component, useLayoutEffect } from 'react';
 import { breadthFirstSearch, getNodesInShortestPathOrderBreadth } from '../../algorithms/breadthFirstSearch';
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
+import { depthFirstSearch, getNodesInShortestPathOrderDepth } from '../../algorithms/deapthFirstSearch';
 import Node from './Node/Node';
 
 import './PathFindingVisualizer.css';
@@ -52,7 +53,7 @@ export default class PathfindingVisualizer extends Component {
     }
 
 
-    animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder) {
+    animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder) {
         for (let i = 0; i <= visitedNodesInOrder.length; i++) {
             if (i === visitedNodesInOrder.length) {
                 setTimeout(() => {
@@ -85,7 +86,7 @@ export default class PathfindingVisualizer extends Component {
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
         const nodesInShortedPathOrder = getNodesInShortestPathOrder(finishNode);
         // console.log(nodesInShortedPathOrder)
-        this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
+        this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
         console.log(grid)
     }
     visualizeBreathFirstSearch() {
@@ -95,9 +96,20 @@ export default class PathfindingVisualizer extends Component {
         const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
         console.log(visitedNodesInOrder.length)
         const nodesInShortedPathOrder = getNodesInShortestPathOrderBreadth(finishNode);
-        this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
+        this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
         // console.log(nodesInShortedPathOrder)
     }
+    visualizeDepthFirstSearch() {
+        const { grid } = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
+        console.log(visitedNodesInOrder.length)
+        const nodesInShortedPathOrder = getNodesInShortestPathOrderDepth(finishNode);
+        this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
+        // console.log(nodesInShortedPathOrder)
+    }
+
     getIntialGrid = () => {
         const grid = [];
         for (let row = 0; row < window.innerHeight/25 - 8; row++) {
@@ -136,6 +148,8 @@ createNode = (col, row) => {
                     Visualize Dijskrtra's Algorithm</button>
             <button onClick={() => this.visualizeBreathFirstSearch()}>
             Visualize Breadth First Search</button>
+            <button onClick={() => this.visualizeDepthFirstSearch()}>
+            Visualize Depth First Search</button>
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
