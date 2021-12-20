@@ -240,6 +240,28 @@ clearGrid(){
         visualizingAlgorithm:false,
     })
 }
+
+clearPath(){
+    if(this.state.visualizingAlgorithm){
+        return;
+    }
+
+    for (let row = 0; row < this.state.grid.length; row++) {
+        for (let col = 0; col < this.state.grid[0].length; col++) {
+
+            if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path"){
+                document.getElementById(`node-${row}-${col}`).className = "node";
+            }
+        }
+    }
+    const newGrid = getNewGridWithoutPath(this.state.grid);
+    this.setState({
+        grid:newGrid,
+        visualizingAlgorithm:false,
+    })
+
+
+}
     
 createNode = (col, row) => {
     return {
@@ -288,7 +310,7 @@ updateSpeed(path,maze){
             // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
             // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
             clearGrid={this.clearGrid.bind(this)}
-            // clearPath={this.clearPath.bind(this)}
+            clearPath={this.clearPath.bind(this)}
             updateSpeed={this.updateSpeed.bind(this)}
             
             />
@@ -350,5 +372,25 @@ const getNewGridWithWeights = (grid, row, col)=> {
         hasWeight: !node.hasWeight,
     };
     newGrid[row][col] = newNode;
+    return newGrid;
+}
+
+const getNewGridWithoutPath = (grid)=> {
+    const newGrid = grid.slice();
+    for(let row of grid){
+        for(let node of row){
+            const newNode = {
+                ...node,
+                distance: Infinity,
+                totalDistance: Infinity,
+                isVisited: false,
+                isShortest: false,
+                previousNode: null,
+            };
+            newGrid[node.row][node.col] = newNode;
+
+        }
+    }
+   
     return newGrid;
 }

@@ -73,7 +73,7 @@ export default class Navbar extends Component {
       this.setState({
         algorithm:"Visualize!",
         pathState:false,
-        mazeState:false
+        mazeState:false,
       })
     }
 
@@ -87,6 +87,17 @@ export default class Navbar extends Component {
       else if(speed === "Fast") value = [10,10];
       this.setState({speedState: speed});
       this.props.updateSpeed(value[0],value[1]);
+    }
+
+    clearPath(){
+      if(this.props.visualizeAlgorithm){
+        return;
+      }
+      this.props.clearPath();
+      this.setState({
+        pathState: false,
+        mazeState: false,
+      });
     }
 
 
@@ -124,7 +135,7 @@ export default class Navbar extends Component {
                 <li id='startButtonStart'><button id="actualStartButton" className="btn btn-default navbar-btn" type="button" onClick={()=>this.visualizeAlgorithm()}>{this.state.algorithm}</button></li>
                 <li id='startButtonClearBoard' onClick={() => this.clearGrid()}><a href="#">Clear Board</a></li>
                 <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
-                <li id='startButtonClearPath'><a href="#">Clear Path</a></li>
+                <li id='startButtonClearPath' onClick={()=>this.clearPath()}><a href="#">Clear Path</a></li>
                 <li className="dropdown">
                   <a href="#" id="adjustSpeed" className="dropdown-toggle" data-toggle="dropdown">Speed : {this.state.speedState} <span className="caret"></span></a>
                   <ul className="dropdown-menu">
