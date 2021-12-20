@@ -3,6 +3,8 @@ import { breadthFirstSearch, getNodesInShortestPathOrderBreadth } from '../../al
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
 import { depthFirstSearch, getNodesInShortestPathOrderDepth } from '../../algorithms/deapthFirstSearch';
 import { bestFirstSearch, getNodesInShortestPathOrderBest } from '../../algorithms/bestFirstSearch';
+import { bidirectionalSearch, getNodesInShortestPathOrderBidirectionalSearch } from '../../algorithms/bidirectionalSearch';
+
 import Node from './Node/Node';
 
 import './PathFindingVisualizer.css';
@@ -69,6 +71,50 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
+    animateBidirectionalAlgorithm(
+        visitedNodesInOrderStart,
+        visitedNodesInOrderFinish,
+        nodesInShortestPathOrder,
+        isShortedPath
+      ) {
+        let len = Math.max(
+          visitedNodesInOrderStart.length,
+          visitedNodesInOrderFinish.length
+        );
+        for (let i = 1; i <= len; i++) {
+          let nodeA = visitedNodesInOrderStart[i];
+          let nodeB = visitedNodesInOrderFinish[i];
+
+          if (i === visitedNodesInOrderStart.length) {
+            setTimeout(() => {
+              let visitedNodesInOrder = getVisitedNodesInOrder(
+                visitedNodesInOrderStart,
+                visitedNodesInOrderFinish
+              );
+              if (isShortedPath) {
+                this.animateShortestPath(
+                  nodesInShortestPathOrder,
+                  visitedNodesInOrder
+                );
+              } else {
+                this.setState({ visualizingAlgorithm: false });
+              }
+            }, i * this.state.speed);
+            return;
+          }
+          setTimeout(() => {
+            //visited nodes
+            if (nodeA !== undefined)
+              document.getElementById(`node-${nodeA.row}-${nodeA.col}`).className =
+                "node node-visited";
+            if (nodeB !== undefined)
+              document.getElementById(`node-${nodeB.row}-${nodeB.col}`).className =
+                "node node-visited";
+          }, i * this.state.speed);
+        }
+      }
+    
+
     animateShortestPath(nodesInShortedPathOrder) {
         for (let i = 0; i < nodesInShortedPathOrder.length; i++){
             setTimeout(() => {
@@ -111,6 +157,7 @@ export default class PathfindingVisualizer extends Component {
         // console.log(nodesInShortedPathOrder)
     }
 
+
     visualizeBestFirstSearch() {
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -121,6 +168,29 @@ export default class PathfindingVisualizer extends Component {
         this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
         // console.log(nodesInShortedPathOrder)
     }
+
+    visualizeBidirectionalSearch() {
+        const { grid } = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = bidirectionalSearch(grid, startNode, finishNode);
+        
+        const visitedNodesInOrderStart = visitedNodesInOrder[0];
+        const visitedNodesInOrderFinish = visitedNodesInOrder[1];
+        const isShortedPath = visitedNodesInOrder[2];
+        const nodesInShortedPathOrder = getNodesInShortestPathOrderBidirectionalSearch(
+        visitedNodesInOrderStart[visitedNodesInOrderStart.length - 1],
+        visitedNodesInOrderFinish[visitedNodesInOrderFinish.length - 1]
+      );
+
+      this.animateBidirectionalAlgorithm(
+        visitedNodesInOrderStart,
+        visitedNodesInOrderFinish,
+        nodesInShortedPathOrder,
+        isShortedPath
+      );
+    }
+
 
     getIntialGrid = () => {
         const grid = [];
@@ -143,7 +213,7 @@ createNode = (col, row) => {
         isStart: row === START_NODE_ROW && col === START_NODE_COL,
         isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
         distance: Infinity,
-        direction:'right',
+        totalDistance: Infinity,
         isVisited: false,
         isWall: false,
         previousNode: null
@@ -165,6 +235,8 @@ createNode = (col, row) => {
             Visualize Depth First Search</button>
             <button onClick={() => this.visualizeBestFirstSearch()}>
             Visualize Best First Search</button>
+            <button onClick={() => this.visualizeBidirectionalSearch()}>
+            Visualize Bidirectional Search</button>
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
@@ -196,6 +268,25 @@ createNode = (col, row) => {
     };
 }
 
+const getVisitedNodesInOrder = (
+    visitedNodesInOrderStart,
+    visitedNodesInOrderFinish
+  ) => {
+    let visitedNodesInOrder = [];
+    let n = Math.max(
+      visitedNodesInOrderStart.length,
+      visitedNodesInOrderFinish.length
+    );
+    for (let i = 0; i < n; i++) {
+      if (visitedNodesInOrderStart[i] !== undefined) {
+        visitedNodesInOrder.push(visitedNodesInOrderStart[i]);
+      }
+      if (visitedNodesInOrderFinish[i] !== undefined) {
+        visitedNodesInOrder.push(visitedNodesInOrderFinish[i]);
+      }
+    }
+    return visitedNodesInOrder;
+  };
 
 const getNewGridWithWallToggled = (grid, row, col) => {
     const newGrid = grid.slice();
