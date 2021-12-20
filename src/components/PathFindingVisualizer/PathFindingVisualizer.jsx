@@ -1,6 +1,7 @@
 import React, { Component, useLayoutEffect } from 'react';
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
 import Node from './Node/Node';
+import Navbar from '../Navbar/Navbar';
 
 import './PathFindingVisualizer.css';
 
@@ -16,6 +17,7 @@ export default class PathfindingVisualizer extends Component {
         this.state = {
             grid: [],
             mouseIsPressed: false,
+            visualizingAlgorithm: false,
             innerWidth: window.innerWidth,
             innerHeight: window.innerHeight,
             currentAlgorithm: null,
@@ -100,46 +102,6 @@ export default class PathfindingVisualizer extends Component {
         this.setState({grid})
 
 
-        // Object.keys(this.nodes).forEach(id => {
-        //   let currentNode = this.nodes[id];
-        //   let currentHTMLNode = document.getElementById(id);
-        //   if (id === start) {
-        //     currentHTMLNode.className = "start";
-        //     currentNode.status = "start";
-        //   } else if (id === target) {
-        //     currentHTMLNode.className = "target";
-        //     currentNode.status = "target"
-        //   } else {
-        //     currentHTMLNode.className = "unvisited";
-        //     currentNode.status = "unvisited";
-        //   }
-        //   currentNode.previousNode = null;
-        //   currentNode.path = null;
-        //   currentNode.direction = null;
-        //   currentNode.storedDirection = null;
-        //   currentNode.distance = Infinity;
-        //   currentNode.totalDistance = Infinity;
-        //   currentNode.heuristicDistance = null;
-        //   currentNode.weight = 0;
-        //   currentNode.relatesToObject = false;
-        //   currentNode.overwriteObjectRelation = false;
-
-        // });
-
-        // this.start = start;
-        // this.target = target;
-        // this.object = null;
-        // this.nodesToAnimate = [];
-        // this.objectNodesToAnimate = [];
-        // this.shortestPathNodesToAnimate = [];
-        // this.wallsToAnimate = [];
-        // this.mouseDown = false;
-        // this.pressedNodeStatus = "normal";
-        // this.previouslyPressedNodeStatus = null;
-        // this.previouslySwitchedNode = null;
-        // this.previouslySwitchedNodeWeight = 0;
-        // this.keyDown = false;
-        // this.algoDone = false;
     }
 
     
@@ -176,21 +138,32 @@ createNode = (col, row) => {
 
     render() {
         const { grid } = this.state;
-        document.getElementById("Dijkstra").onclick = () => {
-            document.getElementById("startButtonStart").innerHTML = '<button id="actualStartButton" class="btn btn-default navbar-btn" type="button">Visualize Dijkstra\'s!</button>';
-            const currentAlgorithm = "dijkstra"
-            this.setState({currentAlgorithm: currentAlgorithm})
-
-        }
-        document.getElementById("startButtonStart").onclick = ()=>{
-            const { currentAlgorithm } = this.state;
-            this.startPathFinder(currentAlgorithm);
-        }
-        document.getElementById("startButtonClearBoard").onclick = () => {
-        this.clearBoard()
-        }
+       
         return (
             <>
+            <Navbar
+
+            visualizingAlgorithm={this.state.visualizingAlgorithm}
+            // generatingMaze={this.state.generatingMaze}
+            visualizeDijkstra={this.visualizeDijkstra.bind(this)}
+            // visualizeAStar={this.visualizeAStar.bind(this)}
+            visualizeBestFirstSearch={this.visualizeBestFirstSearch.bind(this)}
+            visualizeBidirectionalSearch={this.visualizeBidirectionalSearch.bind(this)}
+            visualizeBreadthFirstSearch={this.visualizeBreadthFirstSearch.bind(this)}
+            visualizeDepthFirstSearch={this.visualizeDepthFirstSearch.bind(this)}
+            // generateRandomMaze={this.generateRandomMaze.bind(this)}
+            // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(
+            // this
+            // )}
+            // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
+            // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
+            // clearGrid={this.clearGrid.bind(this)}
+            // clearPath={this.clearPath.bind(this)}
+            // updateSpeed={this.updateSpeed.bind(this)}
+            
+            />
+
+
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (

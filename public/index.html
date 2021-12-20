@@ -22,58 +22,9 @@
     <title>React App</title>
   </head>
   <body>
-    <div id="navbarDiv">
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a href="#" class="navbar-brand" id="refreshBtn"> PathFinding Visualizer</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle">Algorithms<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li id="Dijkstra"><a href="#">Dijkstra's Algorithm</a></li>
-              </ul>
-          </li>
-          <li id='startButtonStart'><button id="actualStartButton" class="btn btn-default navbar-btn" type="button">Visualize!</button></li>
-          <li id='startButtonClearBoard'><a href="#">Clear Board</a></li>
-          <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
-          <li id='startButtonClearPath'><a href="#">Clear Path</a></li>
-          <li class="dropdown">
-            <a href="#" id="adjustSpeed" class="dropdown-toggle" data-toggle="dropdown">Speed : Fast <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li id="adjustFast"> <a href="#"> Fast</a></li>
-              <li id="adjustAverage"> <a href="#"> Average</a></li>
-              <li id="adjustSlow"> <a href="#"> Slow</a></li>
-            </ul>
-          </li>
-          </ul>
-        </div>
-      </nav>
-    </div> 
-
-    <div class="mainGrid">
-      <div id='mainText'>
-        <ul>
-          <li>
-            <div class="start"></div>Start Node</li>
-          <li>
-            <div class="target"></div>Target Node</li>
-         <li>
-            <div class="unvisited"></div>Unvisited Node</li>
-          <li>
-            <div class="visited"></div>Visited Nodes</li>
-          <li>
-            <div class="shortest-path"></div>Shortest-path Node</li>
-        </ul>
-      </div>
-      <div id="algorithmDescriptor">Pick an algorithm and visualize it!</div>
-   
-    
     
     <div id="root"></div>
 
-  </div>
    
   </body>
 
