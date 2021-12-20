@@ -2,6 +2,7 @@ import React, { Component, useLayoutEffect } from 'react';
 import { breadthFirstSearch, getNodesInShortestPathOrderBreadth } from '../../algorithms/breadthFirstSearch';
 import { dijkstra, getNodesInShortestPathOrder } from '../../algorithms/dijkstra';
 import { depthFirstSearch, getNodesInShortestPathOrderDepth } from '../../algorithms/deapthFirstSearch';
+import { bestFirstSearch, getNodesInShortestPathOrderBest } from '../../algorithms/bestFirstSearch';
 import Node from './Node/Node';
 
 import './PathFindingVisualizer.css';
@@ -110,6 +111,17 @@ export default class PathfindingVisualizer extends Component {
         // console.log(nodesInShortedPathOrder)
     }
 
+    visualizeBestFirstSearch() {
+        const { grid } = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
+        console.log(visitedNodesInOrder.length)
+        const nodesInShortedPathOrder = getNodesInShortestPathOrderBest(finishNode);
+        this.animateAlgorithm(visitedNodesInOrder, nodesInShortedPathOrder);
+        // console.log(nodesInShortedPathOrder)
+    }
+
     getIntialGrid = () => {
         const grid = [];
         for (let row = 0; row < window.innerHeight/25 - 8; row++) {
@@ -131,6 +143,7 @@ createNode = (col, row) => {
         isStart: row === START_NODE_ROW && col === START_NODE_COL,
         isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
         distance: Infinity,
+        direction:right,
         isVisited: false,
         isWall: false,
         previousNode: null
@@ -150,6 +163,8 @@ createNode = (col, row) => {
             Visualize Breadth First Search</button>
             <button onClick={() => this.visualizeDepthFirstSearch()}>
             Visualize Depth First Search</button>
+            <button onClick={() => this.visualizeBestFirstSearch()}>
+            Visualize Best First Search</button>
             <div className ="grid">
                 {grid.map((row, idx) => {
                     return (
