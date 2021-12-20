@@ -11,7 +11,7 @@ export default class Navbar extends Component {
             maze:"Generate Maze",
             pathState:false,
             mazeState:false,
-            speedState:"Speed"
+            speedState:"Fast"
 
         };
     }
@@ -77,6 +77,18 @@ export default class Navbar extends Component {
       })
     }
 
+    changeSpeed(speed){
+      if(this.props.visualizeAlgorithm){
+        return;
+      }
+      let value = [10,10];
+      if(speed === "Slow") value = [50,30];
+      else if(speed === "Average") value = [25,20];
+      else if(speed === "Fast") value = [10,10];
+      this.setState({speedState: speed});
+      this.props.updateSpeed(value[0],value[1]);
+    }
+
 
     render() {
 
@@ -114,11 +126,11 @@ export default class Navbar extends Component {
                 <li id='startButtonClearWalls'><a href="#">Clear Walls &amp; Weights</a></li>
                 <li id='startButtonClearPath'><a href="#">Clear Path</a></li>
                 <li className="dropdown">
-                  <a href="#" id="adjustSpeed" className="dropdown-toggle" data-toggle="dropdown">Speed : Fast <span className="caret"></span></a>
+                  <a href="#" id="adjustSpeed" className="dropdown-toggle" data-toggle="dropdown">Speed : {this.state.speedState} <span className="caret"></span></a>
                   <ul className="dropdown-menu">
-                    <li id="adjustFast"> <a href="#"> Fast</a></li>
-                    <li id="adjustAverage"> <a href="#"> Average</a></li>
-                    <li id="adjustSlow"> <a href="#"> Slow</a></li>
+                    <li id="adjustFast" onClick={() => this.changeSpeed("Fast")}> <a href="#"> Fast</a></li>
+                    <li id="adjustAverage" onClick={() => this.changeSpeed("Average")}> <a href="#"> Average</a></li>
+                    <li id="adjustSlow" onClick={() => this.changeSpeed("Slow")}> <a href="#"> Slow</a></li>
                   </ul>
                 </li>
                 </ul>

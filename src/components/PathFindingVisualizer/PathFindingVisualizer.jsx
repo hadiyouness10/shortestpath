@@ -27,6 +27,8 @@ export default class PathfindingVisualizer extends Component {
             innerWidth: window.innerWidth,
             innerHeight: window.innerHeight,
             currentAlgorithm: null,
+            speed:10,
+            mazeSpeed:10,
         };
 
         window.addEventListener('resize', this.getIntialGrid);
@@ -68,13 +70,13 @@ export default class PathfindingVisualizer extends Component {
             if (i === visitedNodesInOrder.length) {
                 setTimeout(() => {
                     this.animateShortestPath(nodesInShortedPathOrder);
-                }, 10 * i*4);
+                }, this.state.speed * i*4);
                 return;
             }
             setTimeout(() => {
                 const node = visitedNodesInOrder[i];
                 document.getElementById(`node-${node.row}-${node.col}`).className = `node node-visited`;
-            }, 10 * i*4);
+            }, this.state.speed * i*4);
         }
     }
 
@@ -92,7 +94,7 @@ export default class PathfindingVisualizer extends Component {
               } else {
                   //add code if algorithm is false
               }
-            }, i * 10);
+            }, i * this.state.speed);
             return;
           }
           setTimeout(() => {
@@ -104,7 +106,7 @@ export default class PathfindingVisualizer extends Component {
               document.getElementById(`node-${nodeA.row}-${nodeA.col}`).className ="node node-visited";
             if (nodeB !== undefined)
               document.getElementById(`node-${nodeB.row}-${nodeB.col}`).className ="node node-visited";
-          }, i * 10);
+          }, i * this.state.speed);
         }
       }
     
@@ -114,7 +116,7 @@ export default class PathfindingVisualizer extends Component {
             setTimeout(() => {
                 const node = nodesInShortedPathOrder[i];
                 document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
-            }, 50*i*4);
+            }, this.state.speed *i*20);
         }
     }
 
@@ -259,6 +261,10 @@ createNode = (col, row) => {
     
 };
 
+updateSpeed(path,maze){
+    this.setState({speed:path,mazeSpeed:maze})
+}
+
 
     render() {
         const { grid } = this.state;
@@ -283,7 +289,7 @@ createNode = (col, row) => {
             // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
             clearGrid={this.clearGrid.bind(this)}
             // clearPath={this.clearPath.bind(this)}
-            // updateSpeed={this.updateSpeed.bind(this)}
+            updateSpeed={this.updateSpeed.bind(this)}
             
             />
 
@@ -323,25 +329,6 @@ createNode = (col, row) => {
     };
 }
 
-// const getVisitedNodesInOrder = (
-//     visitedNodesInOrderStart,
-//     visitedNodesInOrderFinish
-//   ) => {
-//     let visitedNodesInOrder = [];
-//     let n = Math.max(
-//       visitedNodesInOrderStart.length,
-//       visitedNodesInOrderFinish.length
-//     );
-//     for (let i = 0; i < n; i++) {
-//       if (visitedNodesInOrderStart[i] !== undefined) {
-//         visitedNodesInOrder.push(visitedNodesInOrderStart[i]);
-//       }
-//       if (visitedNodesInOrderFinish[i] !== undefined) {
-//         visitedNodesInOrder.push(visitedNodesInOrderFinish[i]);
-//       }
-//     }
-//     return visitedNodesInOrder;
-//   };
 
 const getNewGridWithWallToggled = (grid, row, col) => {
     const newGrid = grid.slice();
