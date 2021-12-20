@@ -3,10 +3,8 @@ export function breadthFirstSearch(grid, startNode, endNode) {
     const queue = [];
     queue.push(startNode);
     let count = 0;
-    while (queue.length > 0 && count < 1000) {
-        console.log('queue length before shifting: ' + queue.length)
+    while (queue.length > 0) {
         const currentNode = queue.shift();
-        console.log('queue length after shifting: ' + queue.length)
         if (currentNode.isWall) continue;
         visitedNodesInOrder.push(currentNode);
         if (currentNode == endNode) {
@@ -17,12 +15,10 @@ export function breadthFirstSearch(grid, startNode, endNode) {
         let neighbors = []
         neighbors = getUnvisitedNeighbors(currentNode, grid);
         for (let i = 0; i < neighbors.length; i++) {
-            if (neighbors[i].isVisited) return;
             if (!queue.includes(neighbors[i]))
                 queue.push(neighbors[i])
 
         }
-        count++;
         updateUnvisistedNeighbors(currentNode, grid);
 
     }
@@ -45,7 +41,6 @@ function getUnvisitedNeighbors(node, grid) {
     if (col < grid[0].length - 1) {
         neighbors.push(grid[row][col + 1]);
     }
-    console.log(neighbors.filter(neighbor => !neighbor.isVisited));
     return neighbors.filter(neighbor => !neighbor.isVisited);
 }
 

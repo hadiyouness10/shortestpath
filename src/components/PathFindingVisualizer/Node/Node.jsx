@@ -18,9 +18,13 @@ export default class Node extends Component {
             isWall,
             onMouseDown,
             onMouseEnter,
-            onMouseUp
+            onMouseUp, 
+            estimatedDistanceToEnd,
+            distanceFromStart,
+            id,
+            hasWeight
         } = this.props;
-        const extraClassName = isFinish ? 'node-finish' : isStart ? 'node-start' : isWall? 'node-wall': '';
+        const extraClassName = isFinish ? 'node-finish' : isStart ? 'node-start' : isWall? 'node-wall': hasWeight? 'node-weight': '';
 
         return (<div
             id={`node-${row}-${col}`}
