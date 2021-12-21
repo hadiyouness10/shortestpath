@@ -214,12 +214,13 @@ export default class PathfindingVisualizer extends Component {
 
     visualizeAStar() {
         this.setState({ visualizingAlgorithm: true });
-        const {grid} = this.state;
+        const { grid } = this.state;
+        console.log('hello')
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = aStarAlgorithm(startNode, finishNode, grid);
         const nodesInShortestPathOrder = reconstructPath(finishNode);
-        this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+        this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
         // const nodesInShortedPathOrder = getNodesInShortestPathOrderBreadth(finishNode);
         // this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
     }
