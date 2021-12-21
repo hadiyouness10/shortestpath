@@ -8,7 +8,7 @@ export default class Navbar extends Component {
         this.state = {
             algorithm:"Visualize!",
             feature:'None',
-            maze:"Generate Maze",
+            maze:"Maze Algorithms",
             pathState:false,
             mazeState:false,
             speedState:"Fast"
@@ -18,7 +18,7 @@ export default class Navbar extends Component {
 
     selectAlgorithm(selection){
         //if algorithm is already running
-        if(this.props.visualizingAlgorithm){
+        if(this.props.visualizingAlgorithm || this.props.generatingMaze){
             return;
         }
        if(this.state.pathState){
@@ -29,15 +29,41 @@ export default class Navbar extends Component {
         }
     }
 
+    generateMaze(selection){
+      if (this.props.visualizingAlgorithm || this.props.generatingMaze) {
+        return;
+      }
+      if(this.state.mazeState){
+        this.clearGrid();
+      }
+
+      this.setState({maze:selection, mazeState:true})
+
+      if (selection === "Random Maze"){
+        this.props.generateRandomMaze();
+      }
+      // else if (this.state.maze === "Generate Recursive Maze")
+      //   this.props.generateRecursiveDivisionMaze();
+      // else if (this.state.maze === "Generate Vertical Maze")
+      //   this.props.generateVerticalMaze();
+      // else if (this.state.maze === "Generate Horizontal Maze")
+      //   this.props.generateHorizontalMaze();
+    // }
+
+      
+    }
+
     selectFeature(selection){
       //if algorithm is already running
-      if(this.props.visualizingAlgorithm){
+      if(this.props.visualizingAlgorithm || this.props.generatingMaze){
           return;
       }
           this.setState({feature:selection});
           this.props.updateFeature(selection);
 
   }
+
+ 
 
     visualizeAlgorithm(){
         //if algorithm is already running
@@ -133,6 +159,18 @@ export default class Navbar extends Component {
                       <li id="DeapthFS" onClick={() => this.selectAlgorithm("Visualize DepthFS")} ><a href="#">Depth First Search</a></li>
                       <li id="Bidirectional" onClick={() => this.selectAlgorithm("Visualize Bidirectional")} ><a href="#">Bidirectional Search</a></li>
                       <li id="AStar" onClick={() => this.selectAlgorithm("Visualize A*")}><a href="#">A* Search</a></li>
+
+                    </ul>
+                </li>
+                <li className="dropdown">
+                    <a href="#" data-toggle="dropdown" className="dropdown-toggle">{this.state.maze}<span className="caret"></span></a>
+                    <ul className="dropdown-menu">
+                      <li id="Dijkstra" onClick={() => this.generateMaze("Random Maze")}><a href="#">Random Maze</a></li>
+                      {/* <li id="BestFS" onClick={() => this.selectMaze("Visualize BestFS")}><a href="#">Best First Search</a></li>
+                      <li id="BreadthFS" onClick={() => this.selectMaze("Visualize BreadthFS")}><a href="#">Breadth First Search</a></li>
+                      <li id="DeapthFS" onClick={() => this.selectMaze("Visualize DepthFS")} ><a href="#">Depth First Search</a></li>
+                      <li id="Bidirectional" onClick={() => this.selectMaze("Visualize Bidirectional")} ><a href="#">Bidirectional Search</a></li>
+                      <li id="AStar" onClick={() => this.selectMaze("Visualize A*")}><a href="#">A* Search</a></li> */}
 
                     </ul>
                 </li>

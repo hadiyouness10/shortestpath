@@ -10,6 +10,7 @@ import Node from './Node/Node';
 import Navbar from '../Navbar/Navbar';
 
 import './PathFindingVisualizer.css';
+import { randomMaze } from '../../mazes/randomMaze';
 
 let START_NODE_ROW = 5;
 let START_NODE_COL = 10;
@@ -26,6 +27,7 @@ export default class PathfindingVisualizer extends Component {
             moveStart:false,
             moveFinish:false,
             visualizingAlgorithm: false,
+            generatingMaze: false,
             innerWidth: window.innerWidth,
             innerHeight: window.innerHeight,
             currentAlgorithm: null,
@@ -368,6 +370,42 @@ export default class PathfindingVisualizer extends Component {
         this.setState({feature:feature})
     }
 
+    generateRandomMaze(){
+        if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
+            return;
+          }
+          this.setState({ generatingMaze: true });
+          setTimeout(() =>{
+
+            const {grid} = this.state;
+            const startNode = grid[START_NODE_ROW][START_NODE_COL];
+            const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+            const walls = randomMaze(grid,startNode,finishNode);
+            this.animateMaze(walls);
+          }, this.state.mazeSpeed)
+    }
+
+    animateMaze = (walls) =>{
+        for(let i =0; i<=walls.length;i++){
+            //reached last wall
+            if(i === walls.length){
+                setTimeout(()=>{
+                    this.clearGrid();
+                    let newGrid = getNewGridWithMaze(this.state.grid, walls);
+                    this.setState({grid:newGrid,generatingMaze:false})
+
+                }, i*this.state.mazeSpeed);
+                return;
+            }
+            let wall = walls[i]; 
+            let node = this.state.grid[wall[0]][wall[1]];
+            setTimeout(()=>{
+                document.getElementById(`node-${node.row}-${node.col}`).className="node node-wall-animated";
+
+            },i*this.state.mazeSpeed);
+        }
+    }
+
 
     render() {
         const { grid } = this.state;
@@ -391,8 +429,8 @@ export default class PathfindingVisualizer extends Component {
             updateFeature={this.updateFeature.bind(this)}
 
 
-            // generatingMaze={this.state.generatingMaze}
-            // generateRandomMaze={this.generateRandomMaze.bind(this)}
+            generatingMaze={this.state.generatingMaze}
+            generateRandomMaze={this.generateRandomMaze.bind(this)}
             // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(this)}
             // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
             // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
@@ -523,5 +561,19 @@ const getNewGridWithFinishNodeToggled = (grid, row,col) =>{
     };
     newGrid[row][col] = newNode;
     return newGrid;
+
+}
+
+const getNewGridWithMaze = (grid, walls)=>{
+const newGrid = grid.slice();
+for(let wall of walls){
+    const node = grid[wall[0]][wall[1]];
+    const newNode = {
+        ...node,
+        isWall:true,
+    }
+    newGrid[wall[0]][wall[1]] = newNode;
+}
+return newGrid;
 
 }
