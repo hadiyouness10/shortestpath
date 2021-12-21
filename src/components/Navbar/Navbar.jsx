@@ -80,8 +80,8 @@ export default class Navbar extends Component {
               this.setState({pathState: true})
               if(this.state.algorithm == "Visualize Dijkstra's")
                   this.props.visualizeDijkstra();
-            // else if (this.state.algorithm === "Visualize A*")
-            //     this.props.visualizeAStar();
+            else if (this.state.algorithm === "Visualize A*")
+                this.props.visualizeAStar();
             else if (this.state.algorithm === "Visualize BestFS")
                 this.props.visualizeBestFirstSearch();
             else if (this.state.algorithm === "Visualize Bidirectional")

@@ -119,7 +119,7 @@ return this.heap.length ==0;
 				idxToSwap = childTwoIdx;
 			}else idxToSwap = childOneIdx;
 			
-			if(heap[idxToSwap].estimatedDistanceToEnd<heap[currentIdx].estimatedDistanceToEnd){
+			if(heap[idxToSwap].estimatedDistanceToEnd<=heap[currentIdx].estimatedDistanceToEnd ){
 				this.swap(currentIdx, idxToSwap, heap);
 				currentIdx = idxToSwap;
 				childOneIdx =currentIdx*2+1;
@@ -130,7 +130,7 @@ return this.heap.length ==0;
 	
 	siftUp(currentIdx, heap){
 		let parentIdx =Math.floor((currentIdx -1)/2);
-		while(currentIdx> 0 && heap[currentIdx].estimatedDistanceToEnd<heap[parentIdx].estimatedDistanceToEnd){
+		while(currentIdx> 0 && heap[currentIdx].estimatedDistanceToEnd<=heap[parentIdx].estimatedDistanceToEnd ){
 			this.swap(currentIdx, parentIdx, heap);
 			currentIdx = parentIdx;
 			parentIdx = Math.floor((currentIdx -1)/2);
