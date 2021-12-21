@@ -318,7 +318,16 @@ export default class PathfindingVisualizer extends Component {
             for (let col = 0; col < this.state.grid[0].length; col++) {
 
                 if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path"){
-                    document.getElementById(`node-${row}-${col}`).className = "node";
+                    if(row==START_NODE_ROW && col==START_NODE_COL){
+                        document.getElementById(`node-${row}-${col}`).className = "node node-start";
+        
+                    } else if(row==FINISH_NODE_ROW && col==FINISH_NODE_COL){
+                        document.getElementById(`node-${row}-${col}`).className = "node node-finish";
+        
+                    }else{ 
+                        document.getElementById(`node-${row}-${col}`).className = "node";
+                    }
+
                 }
             }
         }
