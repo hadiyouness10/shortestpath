@@ -81,12 +81,19 @@ export default class PathfindingVisualizer extends Component {
         if(this.state.moveStart || this.state.moveFinish){
 
             if(row==START_NODE_ROW && col==START_NODE_COL){
+
             
             document.getElementById(`node-${row}-${col}`).className = "node";
+            const newGrid = getNewGridWithStartNodeToggled(this.state.grid, row, col);
+            this.setState({ grid: newGrid });
+
 
             }else if(row==FINISH_NODE_ROW && col==FINISH_NODE_COL){
 
             document.getElementById(`node-${row}-${col}`).className = "node";
+            const newGrid = getNewGridWithFinishNodeToggled(this.state.grid, row, col);
+            this.setState({ grid: newGrid });
+
             }
         }
        
@@ -215,11 +222,11 @@ export default class PathfindingVisualizer extends Component {
     visualizeAStar() {
         this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
-        console.log('hello')
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = aStarAlgorithm(startNode, finishNode, grid);
         const nodesInShortestPathOrder = reconstructPath(finishNode);
+        console.log(nodesInShortestPathOrder)
         this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
         // const nodesInShortedPathOrder = getNodesInShortestPathOrderBreadth(finishNode);
         // this.animateDijkstra(visitedNodesInOrder, nodesInShortedPathOrder);
