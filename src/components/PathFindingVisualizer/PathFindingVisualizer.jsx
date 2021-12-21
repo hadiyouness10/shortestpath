@@ -11,6 +11,9 @@ import Navbar from '../Navbar/Navbar';
 
 import './PathFindingVisualizer.css';
 import { randomMaze } from '../../mazes/randomMaze';
+import { horizontalMaze } from '../../mazes/horizentalMaze';
+import { verticalMaze } from '../../mazes/verticalMaze';
+import { recursiveDivisionMaze } from '../../mazes/recursiveMaze';
 
 let START_NODE_ROW = 5;
 let START_NODE_COL = 10;
@@ -103,6 +106,9 @@ export default class PathfindingVisualizer extends Component {
         if (!this.state.mouseIsPressed) return;
 
         if(this.state.moveStart){
+            if(this.state.grid[row][col].isWall){
+                return;
+            }
 
         START_NODE_ROW = row;
         START_NODE_COL = col;
@@ -112,6 +118,9 @@ export default class PathfindingVisualizer extends Component {
         this.setState({ grid: newGrid });
 
         }else if(this.state.moveFinish){
+            if(this.state.grid[row][col].isWall){
+                return;
+            }
 
         FINISH_NODE_ROW = row;
         FINISH_NODE_COL = col;
@@ -132,7 +141,23 @@ export default class PathfindingVisualizer extends Component {
         
     }
 
-    handleMouseUp() {
+    handleMouseUp(row,col) {
+        if(this.state.moveStart){
+            if(this.state.grid[row][col].isWall){
+                document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = "node node-start";
+                const newGrid = getNewGridWithStartNodeToggled(this.state.grid, START_NODE_ROW, START_NODE_COL);
+                this.setState({ grid: newGrid });
+              
+            }
+        }else if(this.state.moveFinish){
+            if(this.state.grid[row][col].isWall){
+                document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = "node node-finish";
+                const newGrid = getNewGridWithFinishNodeToggled(this.state.grid, FINISH_NODE_ROW, FINISH_NODE_COL);
+                this.setState({ grid: newGrid });
+            }
+        }
+
+
         this.setState({ mouseIsPressed: false, moveStart:false,moveFinish:false });
     }
 
@@ -402,6 +427,51 @@ export default class PathfindingVisualizer extends Component {
           }, this.state.mazeSpeed)
     }
 
+    generateHorizontalMaze(){
+        if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
+            return;
+          }
+          this.setState({ generatingMaze: true });
+          setTimeout(() =>{
+
+            const {grid} = this.state;
+            const startNode = grid[START_NODE_ROW][START_NODE_COL];
+            const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+            const walls = horizontalMaze(grid,startNode,finishNode);
+            this.animateMaze(walls);
+          }, this.state.mazeSpeed)
+    }
+
+    generateVerticalMaze(){
+        if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
+            return;
+          }
+          this.setState({ generatingMaze: true });
+          setTimeout(() =>{
+
+            const {grid} = this.state;
+            const startNode = grid[START_NODE_ROW][START_NODE_COL];
+            const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+            const walls = verticalMaze(grid,startNode,finishNode);
+            this.animateMaze(walls);
+          }, this.state.mazeSpeed)
+    }
+
+    generateRecursiveDivisionMaze(){
+        if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
+            return;
+          }
+          this.setState({ generatingMaze: true });
+          setTimeout(() =>{
+
+            const {grid} = this.state;
+            const startNode = grid[START_NODE_ROW][START_NODE_COL];
+            const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+            const walls = recursiveDivisionMaze(grid,startNode,finishNode);
+            this.animateMaze(walls);
+          }, this.state.mazeSpeed)
+    }
+
     animateMaze = (walls) =>{
         for(let i =0; i<=walls.length;i++){
             //reached last wall
@@ -414,6 +484,7 @@ export default class PathfindingVisualizer extends Component {
                 }, i*this.state.mazeSpeed);
                 return;
             }
+
             let wall = walls[i]; 
             let node = this.state.grid[wall[0]][wall[1]];
             setTimeout(()=>{
@@ -448,8 +519,10 @@ export default class PathfindingVisualizer extends Component {
 
             generatingMaze={this.state.generatingMaze}
             generateRandomMaze={this.generateRandomMaze.bind(this)}
-            // generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(this)}
-            // generateVerticalMaze={this.generateVerticalMaze.bind(this)}
+            generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
+            generateVerticalMaze={this.generateVerticalMaze.bind(this)}
+            generateRecursiveDivisionMaze={this.generateRecursiveDivisionMaze.bind(this)}
+            
             // generateHorizontalMaze={this.generateHorizontalMaze.bind(this)}
             
             />
@@ -476,7 +549,7 @@ export default class PathfindingVisualizer extends Component {
                                         distanceFromStart = {distanceFromStart}
                                         onMouseDown={(row, col) => this.handleMouseDown(row, col)}
                                         onMouseEnter={(row, col) =>this.handleMouseEnter(row, col)}
-                                        onMouseUp={() => this.handleMouseUp()}
+                                        onMouseUp={() => this.handleMouseUp(row,col)}
                                         onMouseLeave={(row,col) => this.handleMouseLeave(row,col)}></Node>
                                 );
                             })}
