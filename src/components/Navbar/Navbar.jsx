@@ -35,6 +35,8 @@ export default class Navbar extends Component {
           return;
       }
           this.setState({feature:selection});
+          this.props.updateFeature(selection);
+
   }
 
     visualizeAlgorithm(){

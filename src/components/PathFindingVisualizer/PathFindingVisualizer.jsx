@@ -31,6 +31,7 @@ export default class PathfindingVisualizer extends Component {
             currentAlgorithm: null,
             speed:10,
             mazeSpeed:10,
+            feature:'None'
         };
 
         window.addEventListener('resize', this.getIntialGrid);
@@ -61,8 +62,13 @@ export default class PathfindingVisualizer extends Component {
       
         this.setState({  mouseIsPressed: true, moveFinish:true });
         }
-        else{
+        else if(this.state.feature==="Wall"){
+
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
+        this.setState({ grid: newGrid, mouseIsPressed: true });
+        }else if(this.state.feature==="Weight"){
+
+        const newGrid = getNewGridWithWeights(this.state.grid, row, col);
         this.setState({ grid: newGrid, mouseIsPressed: true });
         }
     }
@@ -106,9 +112,13 @@ export default class PathfindingVisualizer extends Component {
         this.setState({ grid: newGrid });
 
         }
-        else{
+        else if(this.state.feature ==="Wall"){
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
         this.setState({ grid: newGrid });
+        }
+        else if(this.state.feature ==="Weight"){
+            const newGrid = getNewGridWithWeights(this.state.grid, row, col);
+            this.setState({ grid: newGrid });
         }
         
     }
@@ -265,9 +275,10 @@ export default class PathfindingVisualizer extends Component {
         this.setState({grid})
         console.log(grid);
     return grid;
-};
 
-clearGrid(){
+    };
+
+    clearGrid(){
     if(this.state.visualizingAlgorithm){
         return;
     }
@@ -284,64 +295,68 @@ clearGrid(){
         grid:newGrid,
         visualizingAlgorithm:false,
     })
-}
-
-clearPath(){
-    if(this.state.visualizingAlgorithm){
-        return;
     }
 
-    for (let row = 0; row < this.state.grid.length; row++) {
-        for (let col = 0; col < this.state.grid[0].length; col++) {
+    clearPath(){
+        if(this.state.visualizingAlgorithm){
+            return;
+        }
 
-            if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path"){
-                document.getElementById(`node-${row}-${col}`).className = "node";
+        for (let row = 0; row < this.state.grid.length; row++) {
+            for (let col = 0; col < this.state.grid[0].length; col++) {
+
+                if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path"){
+                    document.getElementById(`node-${row}-${col}`).className = "node";
+                }
             }
         }
-    }
-    const newGrid = getNewGridWithoutPath(this.state.grid);
-    this.setState({
-        grid:newGrid,
-        visualizingAlgorithm:false,
-    })
-}
-
-clearweightsANDwalls(){
-    if(this.state.visualizingAlgorithm){
-        return;
+        const newGrid = getNewGridWithoutPath(this.state.grid);
+        this.setState({
+            grid:newGrid,
+            visualizingAlgorithm:false,
+        })
     }
 
-    const newGrid = getNewGridWithoutWallsAndWeights(this.state.grid);
-    this.setState({
-        grid:newGrid,
-        visualizingAlgorithm:false,
-    })
+    clearweightsANDwalls(){
+        if(this.state.visualizingAlgorithm){
+            return;
+        }
 
-}
-    
-createNode = (col, row) => {
-    return {
-        col,
-        row,
-        isStart: row === START_NODE_ROW && col === START_NODE_COL,
-        isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-        distance: Infinity,
-        totalDistance: Infinity,
-        isVisited: false,
-        estimatedDistanceToEnd: Infinity,
-        distanceFromStart: Infinity,
-        isWall: false,
-        previousNode: null,
-        cameFrom: null,
-        hasWeight: row=== 5 && col === 29,
-        id: row+'-'+col
+        const newGrid = getNewGridWithoutWallsAndWeights(this.state.grid);
+        this.setState({
+            grid:newGrid,
+            visualizingAlgorithm:false,
+        })
+
+    }
+        
+    createNode = (col, row) => {
+        return {
+            col,
+            row,
+            isStart: row === START_NODE_ROW && col === START_NODE_COL,
+            isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+            distance: Infinity,
+            totalDistance: Infinity,
+            isVisited: false,
+            estimatedDistanceToEnd: Infinity,
+            distanceFromStart: Infinity,
+            isWall: false,
+            previousNode: null,
+            cameFrom: null,
+            hasWeight:false,
+            id: row+'-'+col
+        };
+        
     };
-    
-};
 
-updateSpeed(path,maze){
-    this.setState({speed:path,mazeSpeed:maze})
-}
+    updateSpeed(path,maze){
+        this.setState({speed:path,mazeSpeed:maze})
+    }
+
+    updateFeature(feature){
+        this.setState({feature:feature})
+    }
 
 
     render() {
@@ -363,6 +378,7 @@ updateSpeed(path,maze){
             clearPath={this.clearPath.bind(this)}
             clearweightsANDwalls = {this.clearweightsANDwalls.bind(this)}
             updateSpeed={this.updateSpeed.bind(this)}
+            updateFeature={this.updateFeature.bind(this)}
 
 
             // generatingMaze={this.state.generatingMaze}
