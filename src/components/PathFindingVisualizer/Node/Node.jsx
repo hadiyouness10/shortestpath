@@ -18,7 +18,8 @@ export default class Node extends Component {
             isWall,
             onMouseDown,
             onMouseEnter,
-            onMouseUp, 
+            onMouseUp,
+            onMouseLeave, 
             estimatedDistanceToEnd,
             distanceFromStart,
             id,
@@ -31,7 +32,8 @@ export default class Node extends Component {
             className={`node ${extraClassName}`}
             onMouseDown={() => onMouseDown(row, col)}
             onMouseEnter={() => onMouseEnter(row, col)}
-            onMouseUp = {() => onMouseUp(row,col)}
+            onMouseUp = {() => onMouseUp()}
+            onMouseLeave={() => onMouseLeave(row,col)}
         ></div>)
                 
     }

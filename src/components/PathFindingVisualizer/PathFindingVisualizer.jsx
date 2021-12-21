@@ -53,15 +53,13 @@ export default class PathfindingVisualizer extends Component {
 
     handleMouseDown(row, col) {
         if(row==START_NODE_ROW && col==START_NODE_COL){
-        const newGrid = getNewGridWithStartNodeToggled(this.state.grid, row, col);
-        document.getElementById(`node-${row}-${col}`).className = "node";
-
-        this.setState({ grid: newGrid, mouseIsPressed: true, moveStart:true });
+        
+  
+        this.setState({ mouseIsPressed: true, moveStart:true });
 
         }else if(row==FINISH_NODE_ROW && col==FINISH_NODE_COL){
-        const newGrid = getNewGridWithFinishNodeToggled(this.state.grid, row, col);
-        document.getElementById(`node-${row}-${col}`).className = "node";
-        this.setState({ grid: newGrid, mouseIsPressed: true, moveFinish:true });
+      
+        this.setState({  mouseIsPressed: true, moveFinish:true });
         }
         else{
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
@@ -69,34 +67,54 @@ export default class PathfindingVisualizer extends Component {
         }
     }
 
+    handleMouseLeave(row, col) {
+        if (!this.state.mouseIsPressed) return;
+
+        if(this.state.moveStart || this.state.moveFinish){
+
+            if(row==START_NODE_ROW && col==START_NODE_COL){
+            
+            document.getElementById(`node-${row}-${col}`).className = "node";
+
+            }else if(row==FINISH_NODE_ROW && col==FINISH_NODE_COL){
+
+            document.getElementById(`node-${row}-${col}`).className = "node";
+            }
+        }
+       
+    }
+
     handleMouseEnter(row, col) {
         if (!this.state.mouseIsPressed) return;
 
-        if(!this.state.moveStart && !this.state.moveFinish){
+        if(this.state.moveStart){
+
+        START_NODE_ROW = row;
+        START_NODE_COL = col;
+
+        document.getElementById(`node-${row}-${col}`).className = "node node-start";
+        const newGrid = getNewGridWithStartNodeToggled(this.state.grid, row, col);
+        this.setState({ grid: newGrid });
+
+        }else if(this.state.moveFinish){
+
+        FINISH_NODE_ROW = row;
+        FINISH_NODE_COL = col;
+        
+        document.getElementById(`node-${row}-${col}`).className = "node node-finish";
+        const newGrid = getNewGridWithFinishNodeToggled(this.state.grid, row, col);
+        this.setState({ grid: newGrid });
+
+        }
+        else{
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
         this.setState({ grid: newGrid });
         }
         
     }
 
-    handleMouseUp(row, col) {
-        if(this.state.moveStart){
-        console.log("!!")
-        const newGrid = getNewGridWithStartNodeToggled(this.state.grid, row, col);
-        START_NODE_ROW = row;
-        START_NODE_COL = col;
-        document.getElementById(`node-${row}-${col}`).className = "node node-start";
-        this.setState({ grid: newGrid });
-        }else if(this.state.moveFinish){
-        const newGrid = getNewGridWithFinishNodeToggled(this.state.grid, row, col);
-        FINISH_NODE_ROW = row;
-        FINISH_NODE_COL = col;
-        document.getElementById(`node-${row}-${col}`).className = "node node-finish";
-        this.setState({ grid: newGrid });
-        }
-
+    handleMouseUp() {
         this.setState({ mouseIsPressed: false, moveStart:false,moveFinish:false });
-    
     }
 
 
@@ -376,10 +394,9 @@ updateSpeed(path,maze){
                                         estimatedDistanceToEnd = {estimatedDistanceToEnd}
                                         distanceFromStart = {distanceFromStart}
                                         onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                                        onMouseEnter={(row, col) =>
-                                            this.handleMouseEnter(row, col)
-                                        }
-                                        onMouseUp={() => this.handleMouseUp()}></Node>
+                                        onMouseEnter={(row, col) =>this.handleMouseEnter(row, col)}
+                                        onMouseUp={() => this.handleMouseUp()}
+                                        onMouseLeave={(row,col) => this.handleMouseLeave(row,col)}></Node>
                                 );
                             })}
                         </div>
