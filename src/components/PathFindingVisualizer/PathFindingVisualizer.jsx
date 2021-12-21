@@ -141,6 +141,8 @@ export default class PathfindingVisualizer extends Component {
                 document.getElementById(`node-${node.row}-${node.col}`).className = `node node-visited`;
             }, this.state.speed * i*4);
         }
+        this.setState({ visualizingAlgorithm: false });
+
     }
 
     animateBidirectionalAlgorithm(visitedNodesInOrderStart,visitedNodesInOrderFinish,nodesInShortestPathOrder, isShortedPath) {
@@ -155,8 +157,8 @@ export default class PathfindingVisualizer extends Component {
               if (isShortedPath) {
                 this.animateShortestPath(nodesInShortestPathOrder);
               } else {
-                  //add code if algorithm is false
-              }
+                this.setState({ visualizingAlgorithm: false });
+            }
             }, i * this.state.speed);
             return;
           }
@@ -181,9 +183,12 @@ export default class PathfindingVisualizer extends Component {
                 document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
             }, this.state.speed *i*20);
         }
+        this.setState({ visualizingAlgorithm: false });
+
     }
 
     visualizeDijkstra() {
+        this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -194,6 +199,7 @@ export default class PathfindingVisualizer extends Component {
         console.log(grid)
     }
     visualizeBreadthFirstSearch() {
+        this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -205,6 +211,7 @@ export default class PathfindingVisualizer extends Component {
     }
 
     visualizeAStar() {
+        this.setState({ visualizingAlgorithm: true });
         const {grid} = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -217,6 +224,7 @@ export default class PathfindingVisualizer extends Component {
 
 
     visualizeDepthFirstSearch() {
+        this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -229,6 +237,7 @@ export default class PathfindingVisualizer extends Component {
 
 
     visualizeBestFirstSearch() {
+        this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -240,6 +249,7 @@ export default class PathfindingVisualizer extends Component {
     }
 
     visualizeBidirectionalSearch() {
+        this.setState({ visualizingAlgorithm: true });
         const { grid } = this.state;
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
