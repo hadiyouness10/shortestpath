@@ -21,7 +21,7 @@ export default class Navbar extends Component {
         if(this.props.visualizingAlgorithm || this.props.generatingMaze){
             return;
         }
-       if(this.state.pathState){
+       if(this.props.visualizingAlgorithm){
             this.clearPath();
             this.setState({algorithm:selection});
         }else{
@@ -70,7 +70,8 @@ export default class Navbar extends Component {
         if(this.props.visualizeAlgorithm || this.props.generatingMaze){
             return;
 
-        }
+      }
+      this.clearPath();
         // if(this.state.pathState){
         //     this.clearTemp()
         // }
@@ -215,9 +216,6 @@ export default class Navbar extends Component {
             <div className="shortest-path"></div>Shortest-path Node</li>
         </ul>
       </div>
-      <div id="algorithmDescriptor">Pick an algorithm and visualize it!</div>
-    
-
           </div>
 
         )
