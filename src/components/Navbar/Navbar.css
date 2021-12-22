@@ -35,7 +35,7 @@
 }
 
 .node-wall {
-  background-color: rgb(12, 53, 71);
+  background-image: url('../PathFindingVisualizer/Node/images/fire-solid.svg');
 }
 
   .start{

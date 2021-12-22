@@ -12,14 +12,10 @@
 
 .node-start {
     background-image: url('./images/dog-solid.svg');
-    color: #2759AE;
-
 }
 
 .node-weight {
     background-image: url('./images/weight-hanging-solid.svg');
-    
-
 }
 
 .node-visited {
@@ -54,7 +50,8 @@
 }
 
 .node-wall {
-    background-color: rgb(12, 53, 71);
+    background-image: url('./images/fire-solid.svg');
+
 }
 
 .node-shortest-path {
