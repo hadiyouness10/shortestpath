@@ -1,9 +1,8 @@
 export function depthFirstSearch(grid, startNode, endNode){
     const visitedNodesInOrder = [];
-    const stack = [];
+    let stack = [];
     stack.push(startNode);
-    let count =0;
-    while(stack.length > 0 && count<1000){
+    while(stack.length > 0){
         const currNode = stack.pop();
         if(currNode.isWall) continue;
         visitedNodesInOrder.push(currNode);
@@ -14,12 +13,16 @@ export function depthFirstSearch(grid, startNode, endNode){
         let neighbors  = [];
         neighbors = getUnvisitedNeighbors(currNode, grid);
         for(let i=0;i<neighbors.length;i++){
-            if(neighbors[i].isVisited) return;
-            if(!stack.includes(neighbors[i])){
-                stack.push(neighbors[i])
+
+            if(stack.includes(neighbors[i])){
+                //stack.remove(neighbors[i])
+                stack = stack.filter(item => item !== neighbors[i])
+
             }
+            stack.push(neighbors[i])
+
+
         }
-        count++;
         updateUnvisistedNeighbors(currNode, grid);
     }
     return visitedNodesInOrder;

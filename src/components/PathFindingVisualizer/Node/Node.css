@@ -78,10 +78,8 @@
 }
 
 .node-wall-animated {
-    width: var(--width);
-    height: var(--height);
     display: inline-block;
-    animation-name: wallAnimation;
+    animation-name: wallAnimation; 
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
     animation-direction: alternate;

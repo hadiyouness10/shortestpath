@@ -55,6 +55,8 @@ export function bidirectionalSearch(grid, startNode, endNode){
                 neighbour.previousNode = closestNodeStart;
 
             }
+            if(neighbour.hasWeight)neighbour.distance+=5;
+
         }
 
         //Search from End Side
@@ -76,6 +78,11 @@ export function bidirectionalSearch(grid, startNode, endNode){
                 neighbour.totalDistance = manhattenDistance(neighbour,startNode)
                 neighbour.previousNode = closesetNodeEnd;
             }
+            if(neighbour.hasWeight){
+                neighbour.totalDistance+=5;
+                console.log('has weight', neighbour.distance)
+            }
+
         }
     }
 

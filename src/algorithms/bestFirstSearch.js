@@ -33,6 +33,11 @@ export function bestFirstSearch(grid, startNode, endNode){
               neighbour.totalDistance = manhattenDistance(neighbour, endNode);
               neighbour.previousNode = closestNode;
             }
+
+            if(neighbour.hasWeight){
+              neighbour.totalDistance+=5;
+              console.log('has weight', neighbour.distance)
+          }
            
         }
     }

@@ -38,17 +38,18 @@ export default class Navbar extends Component {
       }
 
       this.setState({maze:selection, mazeState:true})
-
+      console.log(selection)
       if (selection === "Random Maze"){
         this.props.generateRandomMaze();
       }
-      // else if (this.state.maze === "Generate Recursive Maze")
-      //   this.props.generateRecursiveDivisionMaze();
-      // else if (this.state.maze === "Generate Vertical Maze")
-      //   this.props.generateVerticalMaze();
-      // else if (this.state.maze === "Generate Horizontal Maze")
-      //   this.props.generateHorizontalMaze();
-    // }
+      else if (selection === "Recursive Maze")
+        this.props.generateRecursiveDivisionMaze();
+      else if (selection === "Vertical Maze")
+        this.props.generateVerticalMaze();
+      else if (selection === "Horizontal Maze")
+        this.props.generateHorizontalMaze();
+
+
 
       
     }
@@ -58,9 +59,14 @@ export default class Navbar extends Component {
       if(this.props.visualizingAlgorithm || this.props.generatingMaze){
           return;
       }
-          this.setState({feature:selection});
-          this.props.updateFeature(selection);
+          if(this.state.algorithm == "Visualize A*" || this.state.algorithm =="Visualize Bidirectional" || this.state.algorithm == "Visualize Dijkstra's" || this.state.algorithm === "Visualize BreadthFS"){
+            this.setState({feature:selection});
+            this.props.updateFeature(selection);
 
+          }else{
+          this.setState({feature:"None"});
+          this.props.updateFeature("None");
+          }
   }
 
  
@@ -166,12 +172,10 @@ export default class Navbar extends Component {
                 <li className="dropdown">
                     <a href="#" data-toggle="dropdown" className="dropdown-toggle">{this.state.maze}<span className="caret"></span></a>
                     <ul className="dropdown-menu">
-                      <li id="Dijkstra" onClick={() => this.generateMaze("Random Maze")}><a href="#">Random Maze</a></li>
-                      {/* <li id="BestFS" onClick={() => this.selectMaze("Visualize BestFS")}><a href="#">Best First Search</a></li>
-                      <li id="BreadthFS" onClick={() => this.selectMaze("Visualize BreadthFS")}><a href="#">Breadth First Search</a></li>
-                      <li id="DeapthFS" onClick={() => this.selectMaze("Visualize DepthFS")} ><a href="#">Depth First Search</a></li>
-                      <li id="Bidirectional" onClick={() => this.selectMaze("Visualize Bidirectional")} ><a href="#">Bidirectional Search</a></li>
-                      <li id="AStar" onClick={() => this.selectMaze("Visualize A*")}><a href="#">A* Search</a></li> */}
+                      <li  onClick={() => this.generateMaze("Random Maze")}><a href="#">Random Maze</a></li>
+                      <li  onClick={() => this.generateMaze("Horizontal Maze")}><a href="#">Horizontal Maze</a></li>
+                      <li  onClick={() => this.generateMaze("Vertical Maze")}><a href="#">Vertical Maze</a></li>
+                      <li  onClick={() => this.generateMaze("Recursive Maze")}><a href="#">Recursive Maze</a></li>
 
                     </ul>
                 </li>
