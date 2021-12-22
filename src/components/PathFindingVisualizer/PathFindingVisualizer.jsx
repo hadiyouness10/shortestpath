@@ -175,8 +175,6 @@ export default class PathfindingVisualizer extends Component {
                 document.getElementById(`node-${node.row}-${node.col}`).className = `node node-visited`;
             }, this.state.speed * i*4);
         }
-        this.setState({ visualizingAlgorithm: false });
-
     }
 
     animateBidirectionalAlgorithm(visitedNodesInOrderStart,visitedNodesInOrderFinish,nodesInShortestPathOrder, isShortedPath) {
@@ -356,6 +354,8 @@ export default class PathfindingVisualizer extends Component {
 
         for (let row = 0; row < this.state.grid.length; row++) {
             for (let col = 0; col < this.state.grid[0].length; col++) {
+                if (START_NODE_ROW === row && START_NODE_COL === col) document.getElementById(`node-${row}-${col}`).className = "node node-start";
+                if (FINISH_NODE_ROW === row && FINISH_NODE_COL === col) document.getElementById(`node-${row}-${col}`).className = "node node-finish";
 
                 if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path" || document.getElementById(`node-${row}-${col}`).className === "node node-visited" ){
                     if(row==START_NODE_ROW && col==START_NODE_COL){
