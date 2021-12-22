@@ -208,15 +208,19 @@ export default class Navbar extends Component {
       <div id='mainText'>
         <ul>
           <li>
-            <div className="start"></div>Start Node</li>
+            <div className="start start-node"></div>Start Node</li>
           <li>
-            <div className="target"></div>Target Node</li>
+            <div className="target finish-node"></div>Target Node</li>
          <li>
             <div className="unvisited"></div>Unvisited Node</li>
           <li>
             <div className="visited"></div>Visited Nodes</li>
           <li>
             <div className="shortest-path"></div>Shortest-path Node</li>
+            <li>
+            <div className="node-weight"></div>Weight</li>
+            <li>
+            <div className="node-wall"></div>Wall</li>
         </ul>
       </div>
       <div id="algorithmDescriptor">Pick an algorithm and visualize it!</div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Node.css';
 
+
 export default class Node extends Component {
 
     constructor(props) {
@@ -34,7 +35,9 @@ export default class Node extends Component {
             onMouseEnter={() => onMouseEnter(row, col)}
             onMouseUp = {() => onMouseUp(row,col)}
             onMouseLeave={() => onMouseLeave(row,col)}
-        ></div>)
+        >
+        
+        </div>)
                 
     }
 }

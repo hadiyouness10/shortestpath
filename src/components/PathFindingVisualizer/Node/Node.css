@@ -6,15 +6,20 @@
 }
 
 .node-finish {
-    background-color: red;
+    background-image: url('./images/bone-solid.svg');
+
 }
 
 .node-start {
-    background-color: green;
+    background-image: url('./images/dog-solid.svg');
+    color: #2759AE;
+
 }
 
 .node-weight {
-    background-color: #ff640a;
+    background-image: url('./images/weight-hanging-solid.svg');
+    
+
 }
 
 .node-visited {
@@ -26,6 +31,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
+
 }
 
 @keyframes visitedAnimation {
@@ -65,15 +71,18 @@
 @keyframes shortestPath {
     0% {
         transform: scale(0.6);
-        background-color: rgba(11, 235, 160, 0.75);
+        background-image: url('./images/dog-solid.svg');
+
     }
     50% {
         transform: scale(1.2);
-        background-color: rgb(180, 101, 36);
+        background-image: url('./images/paw-solid.svg');
+
     }
     100% {
         transform: scale(1);
-        background-color: rgb(194, 68, 36);
+        background-image: url('./images/paw-solid.svg');
+
     }
 }
 
