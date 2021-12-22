@@ -333,6 +333,13 @@ export default class PathfindingVisualizer extends Component {
                 document.getElementById(`node-${row}-${col}`).className = "node";
 
             }
+            else if(row==START_NODE_ROW && col==START_NODE_COL){
+                document.getElementById(`node-${row}-${col}`).className = "node node-start";
+
+            }else if(row===FINISH_NODE_ROW && col ===FINISH_NODE_COL){
+                document.getElementById(`node-${row}-${col}`).className = "node node-finish";
+
+            }
         }
     }
     const newGrid = this.getIntialGrid();
@@ -350,7 +357,7 @@ export default class PathfindingVisualizer extends Component {
         for (let row = 0; row < this.state.grid.length; row++) {
             for (let col = 0; col < this.state.grid[0].length; col++) {
 
-                if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path"){
+                if(document.getElementById(`node-${row}-${col}`).className === "node node-shortest-path" || document.getElementById(`node-${row}-${col}`).className === "node node-visited" ){
                     if(row==START_NODE_ROW && col==START_NODE_COL){
                         document.getElementById(`node-${row}-${col}`).className = "node node-start";
         
@@ -416,6 +423,7 @@ export default class PathfindingVisualizer extends Component {
         if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
             return;
           }
+          this.clearGrid();
           this.setState({ generatingMaze: true });
           setTimeout(() =>{
 
@@ -431,6 +439,7 @@ export default class PathfindingVisualizer extends Component {
         if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
             return;
           }
+          this.clearGrid();
           this.setState({ generatingMaze: true });
           setTimeout(() =>{
 
@@ -446,6 +455,7 @@ export default class PathfindingVisualizer extends Component {
         if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
             return;
           }
+          this.clearGrid();
           this.setState({ generatingMaze: true });
           setTimeout(() =>{
 
@@ -461,6 +471,7 @@ export default class PathfindingVisualizer extends Component {
         if (this.state.visualizingAlgorithm || this.state.generatingMaze) {
             return;
           }
+          this.clearGrid();
           this.setState({ generatingMaze: true });
           setTimeout(() =>{
 

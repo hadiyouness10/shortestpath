@@ -59,9 +59,14 @@ export default class Navbar extends Component {
       if(this.props.visualizingAlgorithm || this.props.generatingMaze){
           return;
       }
-          this.setState({feature:selection});
-          this.props.updateFeature(selection);
+          if(this.state.algorithm == "Visualize A*" || this.state.algorithm =="Visualize Bidirectional" || this.state.algorithm == "Visualize Dijkstra's" || this.state.algorithm === "Visualize BreadthFS"){
+            this.setState({feature:selection});
+            this.props.updateFeature(selection);
 
+          }else{
+          this.setState({feature:"None"});
+          this.props.updateFeature("None");
+          }
   }
 
  

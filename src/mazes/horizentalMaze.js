@@ -11,7 +11,7 @@ export function horizontalMaze(grid){
         }
     }
     for(let i =0; i< grid.length;i+=2){
-        let random = Math.floor(Math.random()*(grid[0].length));
+        let random = Math.floor(Math.random()*(grid[0].length-2)+1);
         for(let j=0; j<grid[0].length; j++){
             if(grid[i][j].isStart || grid[i][j].isFinish)continue;
 
