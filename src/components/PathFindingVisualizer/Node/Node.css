@@ -6,15 +6,16 @@
 }
 
 .node-finish {
-    background-color: red;
+    background-image: url('./images/bone-solid.svg');
+
 }
 
 .node-start {
-    background-color: green;
+    background-image: url('./images/dog-solid.svg');
 }
 
 .node-weight {
-    background-color: #ff640a;
+    background-image: url('./images/weight-hanging-solid.svg');
 }
 
 .node-visited {
@@ -26,6 +27,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
+
 }
 
 @keyframes visitedAnimation {
@@ -48,7 +50,8 @@
 }
 
 .node-wall {
-    background-color: rgb(12, 53, 71);
+    background-image: url('./images/fire-solid.svg');
+
 }
 
 .node-shortest-path {
@@ -65,15 +68,18 @@
 @keyframes shortestPath {
     0% {
         transform: scale(0.6);
-        background-color: rgba(11, 235, 160, 0.75);
+        background-image: url('./images/dog-solid.svg');
+
     }
     50% {
         transform: scale(1.2);
-        background-color: rgb(180, 101, 36);
+        background-image: url('./images/paw-solid.svg');
+
     }
     100% {
         transform: scale(1);
-        background-color: rgb(194, 68, 36);
+        background-image: url('./images/paw-solid.svg');
+
     }
 }
 
@@ -89,25 +95,24 @@
   @keyframes wallAnimation {
     0% {
       transform: scale(0.4);
-      background-color: rgb(2, 36, 51);
+      background-image: url('./images/fire-solid.svg');
       border-radius: 30%;
     }
   
     50% {
       transform: scale(0.6);
-      background-color: rgb(2, 36, 51);
+      background-image: url('./images/fire-solid.svg');
       border-radius: 20%;
     }
   
     75% {
       transform: scale(0.8);
-      background-color: rgb(2, 36, 51);
+      background-image: url('./images/fire-solid.svg');
       border-radius: 10%;
     }
   
     100% {
       transform: scale(1);
-      background-color: rgb(2, 36, 51);
-      border: 1px solid rgb(2, 36, 51);
+      background-image: url('./images/fire-solid.svg');
     }
   }

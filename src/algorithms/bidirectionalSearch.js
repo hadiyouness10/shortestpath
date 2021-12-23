@@ -37,6 +37,7 @@ export function bidirectionalSearch(grid, startNode, endNode){
         //Search from Start Side
         let neighbours = getNeighbours(closestNodeStart, grid);
         for(let neighbour of neighbours){
+            if(neighbour.isWall) continue;
             if(!neighbourNotinUnvisitedNodes(neighbour,unvisitedNodesFinish)){
                 visitedNodesInOrderStart.push(closestNodeStart);
                 visitedNodesInOrderFinish.push(neighbour)
@@ -62,6 +63,7 @@ export function bidirectionalSearch(grid, startNode, endNode){
         //Search from End Side
         neighbours = getNeighbours(closesetNodeEnd, grid);
         for(let neighbour of neighbours){
+            if(neighbour.isWall) continue;
             if(!neighbourNotinUnvisitedNodes(neighbour, unvisitedNodesStart)){
                 visitedNodesInOrderStart.push(closesetNodeEnd);
                 visitedNodesInOrderStart.push(neighbour);
@@ -80,7 +82,6 @@ export function bidirectionalSearch(grid, startNode, endNode){
             }
             if(neighbour.hasWeight){
                 neighbour.totalDistance+=5;
-                console.log('has weight', neighbour.distance)
             }
 
         }

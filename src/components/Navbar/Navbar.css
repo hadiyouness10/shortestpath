@@ -26,10 +26,22 @@
     padding: 15px 25px 15px 25px;
   }
 
+
+
+.node-weight {
+  background-image: url('../PathFindingVisualizer/Node/images/weight-hanging-solid.svg');
+  
+
+}
+
+.node-wall {
+  background-image: url('../PathFindingVisualizer/Node/images/fire-solid.svg');
+}
+
   .start{
     /*border: 1px solid rgb(175, 216, 248);*/
     /* background-image:url(triangletwo-right.svg); */
-    background-color: green;
+    background-image: url('../PathFindingVisualizer/Node/images/dog-solid.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -47,7 +59,7 @@
   .target{
     /*border: 1px solid rgb(175, 216, 248);*/
     /* background-image: url(circle.svg); */
-    background-color:red;
+    background-image: url('../PathFindingVisualizer/Node/images/bone-solid.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -140,10 +152,8 @@
 
 
 
-
-
 .shortest-path{
-    background-color: rgb(255, 254, 106);
+    background-image: url('../PathFindingVisualizer/Node/images/paw-solid.svg');
     animation-name: triangletwo;
     animation-duration: 1.5s;
     animation-timing-function: linear;
@@ -158,17 +168,17 @@
   @keyframes triangletwo {
     0% {
       transform: scale(.6);
-      background-color: rgba(11, 235, 160, 0.75);
+      background-image: url('../PathFindingVisualizer/Node/images/paw-solid.svg');
     }
   
     50% {
       transform: scale(1.2);
-      background-color: rgb(180, 101, 36);
+      background-image: url('../PathFindingVisualizer/Node/images/paw-solid.svg');
     }
   
     100% {
       transform: scale(1.0);
-      background-color: rgb(194, 68, 36);
+      background-image: url('../PathFindingVisualizer/Node/images/paw-solid.svg');
     }
   }
   
