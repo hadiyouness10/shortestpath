@@ -307,7 +307,7 @@ export default class PathfindingVisualizer extends Component {
 
     getIntialGrid = () => {
         const grid = [];
-        for (let row = 0; row < window.innerHeight/25 - 8; row++) {
+        for (let row = 0; row < window.innerHeight/25 - 10; row++) {
         const currentRow = [];
         for (let col = 0; col < window.innerWidth/25 - 4; col++) {
                 
@@ -315,6 +315,11 @@ export default class PathfindingVisualizer extends Component {
         }
         grid.push(currentRow);
         }
+        // START_NODE_ROW = grid.length / 4;
+        // START_NODE_COL = grid[0].length / 4;
+        // FINISH_NODE_ROW = grid.length / 4;
+        // FINISH_NODE_COL = grid[0].length /3
+
         this.setState({grid})
         console.log(grid);
     return grid;
