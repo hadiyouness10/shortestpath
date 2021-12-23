@@ -35,7 +35,7 @@
 }
 
 .node-wall {
-  background-image: url('../PathFindingVisualizer/Node/images/fire-solid.svg');
+  background-color: black;
 }
 
   .start{
@@ -115,6 +115,7 @@
   }
 
   .visited{
+    border-radius:50% ;
     border: 1px solid rgb(175, 216, 248);
     animation-name: visitedAnimation;
     animation-duration: 1.5s;

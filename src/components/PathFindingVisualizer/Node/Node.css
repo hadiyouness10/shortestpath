@@ -3,6 +3,8 @@
     height: 25px;
     outline: 1px solid rgb(175, 216, 248);
     display: inline-block;
+    border-radius: 8%;
+
 }
 
 .node-finish {
@@ -19,6 +21,7 @@
 }
 
 .node-visited {
+    border-radius: 50%;
     animation-name: visitedAnimation;
     animation-duration: 1.5s;
     animation-timing-function: ease-out;
@@ -50,7 +53,7 @@
 }
 
 .node-wall {
-    background-image: url('./images/fire-solid.svg');
+    background-color: black;
 
 }
 
@@ -95,24 +98,24 @@
   @keyframes wallAnimation {
     0% {
       transform: scale(0.4);
-      background-image: url('./images/fire-solid.svg');
+      background-color: black;
       border-radius: 30%;
     }
   
     50% {
       transform: scale(0.6);
-      background-image: url('./images/fire-solid.svg');
+      background-color: black;
       border-radius: 20%;
     }
   
     75% {
       transform: scale(0.8);
-      background-image: url('./images/fire-solid.svg');
+      background-color: black;
       border-radius: 10%;
     }
   
     100% {
       transform: scale(1);
-      background-image: url('./images/fire-solid.svg');
+      background-color: black;
     }
   }
