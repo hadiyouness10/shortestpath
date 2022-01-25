@@ -15,10 +15,10 @@ import { horizontalMaze } from '../../mazes/horizentalMaze';
 import { verticalMaze } from '../../mazes/verticalMaze';
 import { recursiveDivisionMaze } from '../../mazes/recursiveMaze';
 
-let START_NODE_ROW = 5;
-let START_NODE_COL = 10;
-let FINISH_NODE_ROW = 5;
-let FINISH_NODE_COL = 30;
+let START_NODE_ROW = 2;
+let START_NODE_COL = 2;
+let FINISH_NODE_ROW = 8;
+let FINISH_NODE_COL = 5;
 
 export default class PathfindingVisualizer extends Component {
     constructor() {
